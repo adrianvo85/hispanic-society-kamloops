@@ -2,7 +2,8 @@
 import Base from "../../../layouts/Base.astro";
 import View from "../../../components/VolunteerPage.astro";
 import { pagePath } from "../../../lib/paths";
+import { t } from "../../../lib/i18n";
 ---
-<Base lang="es" title="Voluntariado" currentPath={pagePath("es", "volunteer")}>
+<Base lang="es" title="Voluntariado" currentPath={pagePath("es", "volunteer")} description={t("es").seo.volunteer}>
   <View lang="es" />
 </Base>
