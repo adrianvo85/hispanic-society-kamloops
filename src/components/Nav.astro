@@ -5,32 +5,38 @@ interface Props { lang: Lang; currentPath: string; }
 const { lang, currentPath } = Astro.props;
 const copy = t(lang);
 const links = [
-  { href: pagePath(lang, "events"), label: copy.nav.events },
-  { href: pagePath(lang, "donate"), label: copy.nav.donate },
-  { href: pagePath(lang, "volunteer"), label: copy.nav.volunteer },
-  { href: pagePath(lang, "sponsors"), label: copy.nav.sponsors },
-  { href: pagePath(lang, "board"), label: copy.nav.board },
-  { href: pagePath(lang, "about"), label: copy.nav.about },
-  { href: pagePath(lang, "contact"), label: copy.nav.contact },
+  { href: pagePath(lang, "events"), label: copy.nav.events, id: "events" },
+  { href: pagePath(lang, "volunteer"), label: copy.nav.volunteer, id: "volunteer" },
+  { href: pagePath(lang, "sponsors"), label: copy.nav.sponsors, id: "sponsors" },
+  { href: pagePath(lang, "board"), label: copy.nav.board, id: "board" },
+  { href: pagePath(lang, "about"), label: copy.nav.about, id: "about" },
+  { href: pagePath(lang, "contact"), label: copy.nav.contact, id: "contact" },
 ];
+const isActive = (href: string) => currentPath.replace(/\/$/, "") === href.replace(/\/$/, "");
 ---
 <header class="nav" data-nav>
   <a class="nav-brand" href={pagePath(lang)}>
-    <img src={withBase("/images/logos/emblem.png")} alt="" width="36" height="34" />
-    <span>{lang === "es" ? copy.siteTitleEs : copy.siteTitle}</span>
+    <img class="logo-on-dark" src={withBase("/images/logos/logo-wordmark-light.svg")} width="320" height="60" alt={copy.logo.altWordmark} />
+    <img class="logo-on-light" src={withBase("/images/logos/logo-wordmark.svg")} width="320" height="60" alt="" />
   </a>
-  <nav>
-    <ul class="nav-links">
+  <nav aria-label="Primary">
+    <ul class="nav-links" data-nav-links>
       {links.map((l) => (
-        <li><a href={l.href}>{l.label}</a></li>
+        <li><a href={l.href} aria-current={isActive(l.href) ? "page" : undefined}>{l.label}</a></li>
       ))}
     </ul>
   </nav>
   <div class="nav-cta">
     <div class="lang-toggle" aria-label="Language">
-      <a href={withLang("en", currentPath)} aria-current={lang === "en" ? "true" : undefined}>EN</a>
-      <a href={withLang("es", currentPath)} aria-current={lang === "es" ? "true" : undefined}>ES</a>
+      <a href={withLang("en", currentPath)} aria-current={lang === "en" ? "true" : undefined} lang="en">EN</a>
+      <a href={withLang("es", currentPath)} aria-current={lang === "es" ? "true" : undefined} lang="es">ES</a>
     </div>
-    <a class="btn btn-primary" href={pagePath(lang, "donate")}>{copy.donate.sticky}</a>
+    <a class="btn btn-primary" href={pagePath(lang, "donate")}>
+      <span class="dot" aria-hidden="true"></span>
+      {copy.donate.sticky}
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu">
+      <span></span>
+    </button>
   </div>
 </header>

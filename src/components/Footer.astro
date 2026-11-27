@@ -1,20 +1,45 @@
 ---
 import { t } from "../lib/i18n";
-import type { Lang } from "../lib/paths";
+import { pagePath, withBase, type Lang } from "../lib/paths";
+import settings from "../content/site/settings.json";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const copy = t(lang);
+const links = [
+  { href: pagePath(lang, "events"), label: copy.nav.events },
+  { href: pagePath(lang, "donate"), label: copy.nav.donate },
+  { href: pagePath(lang, "volunteer"), label: copy.nav.volunteer },
+  { href: pagePath(lang, "sponsors"), label: copy.nav.sponsors },
+  { href: pagePath(lang, "board"), label: copy.nav.board },
+  { href: pagePath(lang, "about"), label: copy.nav.about },
+  { href: pagePath(lang, "contact"), label: copy.nav.contact },
+];
 ---
 <footer class="site-footer">
-  <div class="wrap footer-row">
-    <div>
-      <p>{copy.footer.legal}</p>
-      <p style="margin-top:0.5rem;opacity:0.7">{copy.footer.privacy}</p>
-    </div>
-    <p>
-      <a class="tresd" href="https://tresd.ca" rel="noopener">
-        {copy.footer.credit}
+  <div class="wrap-wide footer-grid">
+    <div class="footer-brand">
+      <a href={pagePath(lang)}>
+        <img src={withBase("/images/logos/logo-wordmark-light.svg")} width="320" height="60" alt={copy.logo.altWordmark} />
       </a>
+      <p style="margin-top:1.4rem">{copy.footer.legal}</p>
+      <p class="logo-note">{copy.logo.proposal}</p>
+    </div>
+    <div class="footer-col">
+      <h3>{copy.footer.explore}</h3>
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </div>
+    <div class="footer-col">
+      <h3>{copy.footer.connect}</h3>
+      <a href={`mailto:${settings.email}`}>{settings.email}</a>
+      <a href={settings.facebookUrl} rel="noopener">Facebook</a>
+      <a href={settings.instagramUrl} rel="noopener">{settings.instagramHandle}</a>
+      <a href={settings.orgbookUrl} rel="noopener">OrgBook · {settings.societyNumber}</a>
+    </div>
+  </div>
+  <div class="wrap-wide footer-bottom">
+    <p>{copy.footer.privacy}</p>
+    <p>
+      <a class="tresd" href="https://tresd.ca" rel="noopener">{copy.footer.credit}</a>
     </p>
   </div>
 </footer>

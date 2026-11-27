@@ -19,7 +19,10 @@ const copy = t(lang);
       ))}
     </div>
     {settings.zeffyDonateUrl ? (
-      <a class="btn btn-primary" href={settings.zeffyDonateUrl} rel="noopener">{copy.donate.cta}</a>
+      <a class="btn btn-primary" href={settings.zeffyDonateUrl} rel="noopener">
+        <span class="dot" aria-hidden="true"></span>
+        {copy.donate.cta}
+      </a>
     ) : (
       <p class="note" style="color:rgba(255,255,255,0.8)">{copy.donate.pending} <a href={`mailto:${settings.email}`}>{settings.email}</a></p>
     )}
