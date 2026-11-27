@@ -2,32 +2,75 @@
 import EventCard from "./EventCard.astro";
 import Hero from "./Hero.astro";
 import { t, pick } from "../lib/i18n";
-import { pagePath, type Lang } from "../lib/paths";
+import { pagePath, withBase, type Lang } from "../lib/paths";
 import { allEvents, splitEvents } from "../lib/events";
 import { getCollection } from "astro:content";
 import settings from "../content/site/settings.json";
-import postsFeed from "../content/facebook/posts.json";
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const copy = t(lang);
-const { upcoming, past } = splitEvents(await allEvents());
+const events = await allEvents();
+const { upcoming, past } = splitEvents(events);
 const featuredPast = past.filter((e) => e.data.featured).slice(0, 3);
 const pastPreview = featuredPast.length ? featuredPast : past.slice(0, 3);
 const sponsors = await getCollection("sponsors");
 const partners = (await getCollection("partners")).sort((a, b) => a.data.order - b.data.order);
-const fbPosts = (postsFeed.items || []).slice(0, 3);
+const documented = events.length;
 ---
 <Hero lang={lang} />
 
-<section class="section" id="events">
+<section class="manifesto" id="vision">
   <div class="wrap">
-    <div class="section-head">
+    <p class="eyebrow reveal">{copy.manifesto.eyebrow}</p>
+    <h2 class="reveal">{copy.manifesto.line1}<br />{copy.manifesto.line2}<br />{copy.manifesto.line3}</h2>
+    <p class="lede reveal">{copy.manifesto.body}</p>
+    <ul class="motto reveal">
+      {copy.mottoWords.map((w) => <li><i></i>{w}</li>)}
+    </ul>
+  </div>
+</section>
+
+<section class="impact" id="impact">
+  <div class="wrap-wide">
+    <div class="section-head reveal">
+      <p class="eyebrow">{copy.impact.eyebrow}</p>
+      <h2>{copy.impact.title}</h2>
+      <p class="lede">{copy.impact.body}</p>
+    </div>
+    <div class="impact-grid">
+      <div class="stat reveal">
+        <strong>2019</strong>
+        <span>{copy.impact.sinceLabel}</span>
+      </div>
+      <div class="stat reveal">
+        <strong>S0071166</strong>
+        <span>{copy.impact.societyLabel}</span>
+      </div>
+      <div class="stat reveal">
+        <strong>{documented}</strong>
+        <span>{copy.impact.eventsLabel}</span>
+      </div>
+      <div class="stat reveal">
+        <strong>{partners.length}</strong>
+        <span>{copy.impact.partnersLabel}</span>
+      </div>
+      <div class="stat reveal">
+        <strong>{copy.impact.languagesValue}</strong>
+        <span>{copy.impact.languagesLabel}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="events">
+  <div class="wrap-wide">
+    <div class="section-head reveal">
       <p class="eyebrow">{copy.upcoming.eyebrow}</p>
       <h2>{copy.upcoming.title}</h2>
     </div>
     {upcoming.length === 0 ? (
-      <p class="empty-state">{copy.upcoming.empty}</p>
+      <p class="empty-state reveal">{copy.upcoming.empty}</p>
     ) : (
       <div class="grid-cards">
         {upcoming.map((event) => <EventCard lang={lang} event={event} />)}
@@ -35,16 +78,17 @@ const fbPosts = (postsFeed.items || []).slice(0, 3);
     )}
 
     {pastPreview.length > 0 && (
-      <div style="margin-top:4rem">
-        <div class="section-head">
+      <div style="margin-top:6rem">
+        <div class="section-head reveal">
           <p class="eyebrow">{copy.galleryCta.eyebrow}</p>
           <h2>{copy.upcoming.pastTitle}</h2>
           <p class="lede">{copy.galleryCta.body}</p>
+          <p class="stock-caption">{copy.media.realGallery}</p>
         </div>
         <div class="grid-cards">
           {pastPreview.map((event) => <EventCard lang={lang} event={event} />)}
         </div>
-        <p style="margin-top:1.5rem">
+        <p style="margin-top:2rem">
           <a class="btn btn-ghost" href={pagePath(lang, "events")}>{copy.upcoming.allEvents}</a>
         </p>
       </div>
@@ -52,29 +96,12 @@ const fbPosts = (postsFeed.items || []).slice(0, 3);
   </div>
 </section>
 
-{fbPosts.length > 0 && (
-  <section class="section" style="padding-top:0">
-    <div class="wrap">
-      <p class="eyebrow">{copy.fb.eyebrow}</p>
-      <h2>{copy.fb.title}</h2>
-      <div class="grid-cards" style="margin-top:1.5rem">
-        {fbPosts.map((p: any) => (
-          <a class="card" href={p.permalink} rel="noopener">
-            {p.picture && <div class="card-media"><img src={p.picture} alt="" /></div>}
-            <div class="card-body"><p>{p.message}</p></div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-)}
-
-<section class="section section-dark" id="donate">
+<section class="section-dark section" id="donate">
   <div class="wrap">
-    <p class="eyebrow">{copy.donate.eyebrow}</p>
-    <h2>{copy.donate.title}</h2>
-    <p class="lede">{copy.donate.body}</p>
-    <div class="amounts">
+    <p class="eyebrow reveal">{copy.donate.eyebrow}</p>
+    <h2 class="reveal">{copy.donate.title}</h2>
+    <p class="lede reveal">{copy.donate.body}</p>
+    <div class="amounts reveal">
       {copy.donate.amounts.map((n) => {
         const href = settings.zeffyDonateUrl || pagePath(lang, "donate");
         return (
@@ -86,33 +113,40 @@ const fbPosts = (postsFeed.items || []).slice(0, 3);
       })}
     </div>
     {settings.zeffyDonateUrl ? (
-      <a class="btn btn-primary" href={settings.zeffyDonateUrl} rel="noopener">{copy.donate.cta}</a>
+      <a class="btn btn-primary" href={settings.zeffyDonateUrl} rel="noopener">
+        <span class="dot" aria-hidden="true"></span>
+        {copy.donate.cta}
+      </a>
     ) : (
-      <p class="note" style="color:rgba(255,255,255,0.75)">{copy.donate.pending}</p>
+      <p class="note reveal">{copy.donate.pending}</p>
     )}
-    <p class="lede" style="margin-top:1.2rem">{copy.donate.invoiceNote}</p>
-    <p style="margin-top:1.4rem">
-      <a class="btn btn-light" href={pagePath(lang, "donate")}>{copy.donate.cta}</a>
+    <p class="lede" style="margin-top:1.6rem">{copy.donate.invoiceNote}</p>
+    <p style="margin-top:1.8rem">
+      <a class="btn btn-solid" href={pagePath(lang, "donate")}>{copy.donate.cta}</a>
     </p>
   </div>
 </section>
 
-<section class="section" id="volunteer">
-  <div class="wrap">
-    <p class="eyebrow">{copy.volunteer.eyebrow}</p>
-    <h2>{copy.volunteer.title}</h2>
-    <p class="lede">{copy.volunteer.body}</p>
-    <p style="margin-top:1.6rem">
-      <a class="btn btn-dark" href={pagePath(lang, "volunteer")}>{copy.volunteer.sticky}</a>
+<section class="band-photo" style={`background-image:url('${withBase("/images/stock/festival-night.jpg")}')`}>
+  <div class="shade"></div>
+  <div class="copy wrap reveal">
+    <p class="eyebrow" style="color:#fff">{copy.volunteer.eyebrow}</p>
+    <h2 style="font-size:clamp(3rem,5vw,5.4rem);font-weight:400;letter-spacing:-0.03em;max-width:16ch;margin:0.6rem 0 1.2rem">{copy.volunteer.title}</h2>
+    <p class="lede" style="color:rgba(255,255,255,0.8)">{copy.volunteer.body}</p>
+    <p style="margin-top:2rem">
+      <a class="btn btn-solid" href={pagePath(lang, "volunteer")}>{copy.volunteer.sticky}</a>
     </p>
+    <p class="stock-caption">{copy.media.stock}</p>
   </div>
 </section>
 
-<section class="section" id="sponsors" style="padding-top:0">
+<section class="section" id="sponsors">
   <div class="wrap">
-    <p class="eyebrow">{copy.sponsors.eyebrow}</p>
-    <h2>{copy.sponsors.wallTitle}</h2>
-    <div class="wall" style="margin-top:1.5rem">
+    <div class="section-head reveal">
+      <p class="eyebrow">{copy.sponsors.eyebrow}</p>
+      <h2>{copy.sponsors.wallTitle}</h2>
+    </div>
+    <div class="wall">
       {sponsors.map((s) => (
         <a class="wall-item" href={s.data.url || pagePath(lang, "sponsors")}>
           {s.data.logo ? <img src={s.data.logo} alt={s.data.name} /> : <strong>{s.data.name}</strong>}
@@ -120,20 +154,20 @@ const fbPosts = (postsFeed.items || []).slice(0, 3);
         </a>
       ))}
     </div>
-    <p style="margin-top:1.5rem">
-      <a class="btn btn-ghost" href={pagePath(lang, "sponsors")}>{copy.sponsors.programCta}</a>
+    <p style="margin-top:2rem">
+      <a class="btn btn-dark" href={pagePath(lang, "sponsors")}>{copy.sponsors.programCta}</a>
     </p>
   </div>
 </section>
 
-<section class="section" id="about" style="background:var(--paper-2)">
+<section class="section section-alt" id="about">
   <div class="wrap">
-    <p class="eyebrow">{copy.about.eyebrow}</p>
-    <h2>{copy.about.title}</h2>
-    <p class="lede">{lang === "es" ? settings.chlavmDescriptionEs : settings.chlavmDescriptionEn}</p>
+    <p class="eyebrow reveal">{copy.about.eyebrow}</p>
+    <h2 class="reveal">{copy.about.title}</h2>
+    <p class="lede reveal">{lang === "es" ? settings.chlavmDescriptionEs : settings.chlavmDescriptionEn}</p>
     <p class="note">{copy.about.directoryNote}</p>
-    <p class="lede" style="margin-top:1.2rem">{copy.about.history}</p>
-    <h3 style="font-family:var(--serif);font-size:2rem;margin:2.5rem 0 1rem">{copy.about.partners}</h3>
+    <p class="lede" style="margin-top:1.4rem">{copy.about.history}</p>
+    <h3 style="font-size:2.2rem;font-weight:500;margin:3.2rem 0 1.2rem">{copy.about.partners}</h3>
     <div class="partners">
       {partners.map((p) => (
         <a class="partner" href={p.data.url} rel="noopener">
@@ -141,9 +175,10 @@ const fbPosts = (postsFeed.items || []).slice(0, 3);
         </a>
       ))}
     </div>
-    <p style="margin-top:1.5rem">
+    <p style="margin-top:2.4rem;display:flex;flex-wrap:wrap;gap:0.8rem">
       <a class="btn btn-ghost" href={pagePath(lang, "about")}>{copy.nav.about}</a>
-      <a class="btn btn-dark" href={pagePath(lang, "contact")} style="margin-left:0.4rem">{copy.nav.contact}</a>
+      <a class="btn btn-dark" href={pagePath(lang, "board")}>{copy.trust.boardCta}</a>
+      <a class="btn btn-ghost" href={pagePath(lang, "contact")}>{copy.nav.contact}</a>
     </p>
   </div>
 </section>
