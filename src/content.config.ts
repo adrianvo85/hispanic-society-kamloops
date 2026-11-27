@@ -97,6 +97,23 @@ const volunteerRoles = defineCollection({
   }),
 });
 
+
+const eventJobs = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/event-jobs" }),
+  schema: z.object({
+    slug: z.string(),
+    example: z.boolean().default(true),
+    title_en: z.string(),
+    title_es: z.string(),
+    event_en: z.string().default(""),
+    event_es: z.string().default(""),
+    date: z.string().optional().default(""),
+    pay_en: z.string(),
+    pay_es: z.string(),
+    order: z.number().default(0),
+  }),
+});
+
 const partners = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/partners" }),
   schema: z.object({
@@ -114,5 +131,6 @@ export const collections = {
   resolutions,
   sponsors,
   volunteerRoles,
+  eventJobs,
   partners,
 };

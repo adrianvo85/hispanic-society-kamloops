@@ -107,3 +107,41 @@ content:
     type: file
     path: src/content/site/sponsorship.json
     format: json
+
+  - name: letter
+    label: Letter from the President
+    type: file
+    path: src/content/site/letter.json
+    format: json
+    fields:
+      - { name: draft, label: Draft (show DRAFT badge), type: boolean }
+      - { name: presidentName_en, label: "President name (EN, use [President's name — pending] until confirmed)", type: string }
+      - { name: presidentName_es, label: "Nombre de la presidencia (ES)", type: string }
+      - { name: role_en, label: Role (EN), type: string }
+      - { name: role_es, label: Cargo (ES), type: string }
+      - { name: date_en, label: Date (EN), type: string }
+      - { name: date_es, label: Fecha (ES), type: string }
+      - { name: greeting_en, label: Greeting (EN), type: string }
+      - { name: greeting_es, label: Saludo (ES), type: string }
+      - { name: body_en, label: Letter body (EN), type: text }
+      - { name: body_es, label: Cuerpo de la carta (ES), type: text }
+      - { name: closing_en, label: Closing (EN), type: string }
+      - { name: closing_es, label: Despedida (ES), type: string }
+  - name: event-jobs
+    label: Paid event jobs
+    type: collection
+    path: src/content/event-jobs
+    filename: "{slug}.md"
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug, type: string }
+      - { name: example, label: Example posting, type: boolean }
+      - { name: title_en, label: Title (EN), type: string }
+      - { name: title_es, label: Title (ES), type: string }
+      - { name: event_en, label: Event (EN), type: string }
+      - { name: event_es, label: Evento (ES), type: string }
+      - { name: date, label: Date, type: string }
+      - { name: pay_en, label: Pay (EN, e.g. Set by the board), type: string }
+      - { name: pay_es, label: Pago (ES), type: string }
+      - { name: order, label: Order, type: number }
+      - { name: body, label: Description, type: rich-text }
