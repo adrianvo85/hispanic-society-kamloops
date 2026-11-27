@@ -6,7 +6,7 @@
   "description": "Official website of the Hispanic Society of Kamloops / Sociedad Hispana de Kamloops. Built and donated by tresD.",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/ensure-assets.mjs && astro build",
     "preview": "astro preview",
     "sync:facebook": "node scripts/sync-facebook.mjs"
   },
