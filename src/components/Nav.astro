@@ -1,23 +1,24 @@
 ---
 import { t } from "../lib/i18n";
-import { pagePath, withBase, withLang, type Lang } from "../lib/paths";
+import { pagePath, withLang, type Lang } from "../lib/paths";
+import OfficialLogo from "./OfficialLogo.astro";
 interface Props { lang: Lang; currentPath: string; }
 const { lang, currentPath } = Astro.props;
 const copy = t(lang);
 const links = [
-  { href: pagePath(lang, "events"), label: copy.nav.events, id: "events" },
-  { href: pagePath(lang, "volunteer"), label: copy.nav.volunteer, id: "volunteer" },
-  { href: pagePath(lang, "sponsors"), label: copy.nav.sponsors, id: "sponsors" },
-  { href: pagePath(lang, "board"), label: copy.nav.board, id: "board" },
-  { href: pagePath(lang, "about"), label: copy.nav.about, id: "about" },
-  { href: pagePath(lang, "contact"), label: copy.nav.contact, id: "contact" },
+  { href: pagePath(lang, "events"), label: copy.nav.events },
+  { href: pagePath(lang, "volunteer"), label: copy.nav.volunteer },
+  { href: pagePath(lang, "letter"), label: copy.nav.letter },
+  { href: pagePath(lang, "sponsors"), label: copy.nav.sponsors },
+  { href: pagePath(lang, "board"), label: copy.nav.board },
+  { href: pagePath(lang, "about"), label: copy.nav.about },
+  { href: pagePath(lang, "contact"), label: copy.nav.contact },
 ];
 const isActive = (href: string) => currentPath.replace(/\/$/, "") === href.replace(/\/$/, "");
 ---
 <header class="nav" data-nav>
   <a class="nav-brand" href={pagePath(lang)}>
-    <img class="logo-on-dark" src={withBase("/images/logos/logo-wordmark-light.svg")} width="320" height="60" alt={copy.logo.altWordmark} />
-    <img class="logo-on-light" src={withBase("/images/logos/logo-wordmark.svg")} width="320" height="60" alt="" />
+    <OfficialLogo alt={copy.logo.altWordmark} />
   </a>
   <nav aria-label="Primary">
     <ul class="nav-links" data-nav-links>

@@ -1,6 +1,7 @@
 ---
 import { t } from "../lib/i18n";
-import { pagePath, withBase, type Lang } from "../lib/paths";
+import { pagePath, type Lang } from "../lib/paths";
+import OfficialLogo from "./OfficialLogo.astro";
 import settings from "../content/site/settings.json";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -9,20 +10,21 @@ const links = [
   { href: pagePath(lang, "events"), label: copy.nav.events },
   { href: pagePath(lang, "donate"), label: copy.nav.donate },
   { href: pagePath(lang, "volunteer"), label: copy.nav.volunteer },
+  { href: pagePath(lang, "letter"), label: copy.nav.letter },
   { href: pagePath(lang, "sponsors"), label: copy.nav.sponsors },
   { href: pagePath(lang, "board"), label: copy.nav.board },
   { href: pagePath(lang, "about"), label: copy.nav.about },
   { href: pagePath(lang, "contact"), label: copy.nav.contact },
 ];
 ---
+<div class="color-bar" aria-hidden="true"></div>
 <footer class="site-footer">
   <div class="wrap-wide footer-grid">
     <div class="footer-brand">
       <a href={pagePath(lang)}>
-        <img src={withBase("/images/logos/logo-wordmark-light.svg")} width="320" height="60" alt={copy.logo.altWordmark} />
+        <OfficialLogo alt={copy.logo.altWordmark} />
       </a>
       <p style="margin-top:1.4rem">{copy.footer.legal}</p>
-      <p class="logo-note">{copy.logo.proposal}</p>
     </div>
     <div class="footer-col">
       <h3>{copy.footer.explore}</h3>
@@ -37,8 +39,8 @@ const links = [
     </div>
   </div>
   <div class="wrap-wide footer-bottom">
-    <p>{copy.footer.privacy}</p>
-    <p>
+    <p class="footer-privacy">{copy.footer.privacy}</p>
+    <p class="footer-credit">
       <a class="tresd" href="https://tresd.ca" rel="noopener">{copy.footer.credit}</a>
     </p>
   </div>
