@@ -9,7 +9,7 @@ Public website for the **Hispanic Society of Kamloops / Sociedad Hispana de Kaml
 
 ## Stack
 
-Astro static site, GSAP ScrollTrigger, Lenis, a light Three.js logo (CSS 3D and a still image as fallback). Content lives in Markdown and JSON under `src/content/` so it can later be fed by a Google Sheet or a CMS.
+Astro static site with a cinematic, editorial visual system inspired by [oceanx.org](https://oceanx.org): full-bleed muted video hero, Inter / Big Shoulders Display / DM Mono typography, GSAP ScrollTrigger and Lenis. Content lives in Markdown and JSON under `src/content/` for Pages CMS and Decap.
 
 ## Update content without code
 
@@ -43,3 +43,18 @@ Form endpoints and the Zeffy donation URL are placeholders in `src/content/site/
 ## License and credit
 
 Site built and donated by tresD. Brand marks and event posters remain property of the Hispanic Society of Kamloops and its partners.
+
+## Visual identity and media credits
+
+The circular mark, mountain emblem and wordmarks in `public/images/logos/logo-*.svg` are **high-quality vector reconstructions proposed by tresD**, based on the Society’s public logos. They are pending the Society’s approval and are labelled as a proposal in the site footer.
+
+Hero video and atmospheric stills are free-license stock. They are **not** photographs of Society events. Event galleries use only the Society’s public posters.
+
+| File | Work | Author / source | Licence |
+| --- | --- | --- | --- |
+| `public/videos/hero.webm` / `hero.mp4` / `hero-poster.jpg` | *Crowd dancing in a music festival by night* (8s loop, muted) | [Mixkit #13265](https://mixkit.co/free-stock-video/crowd-dancing-in-a-music-festival-by-night-13265/) | [Mixkit License](https://mixkit.co/license/) |
+| `public/images/stock/festival-night.jpg` | Still from *Festival crowd jumping and dancing at night* | [Mixkit #14088](https://mixkit.co/free-stock-video/festival-crowd-jumping-and-dancing-at-night-14088/) | Mixkit License |
+| `public/images/stock/salsa-studio.jpg` | Still from *Cheerful man and woman dancing salsa* | [Mixkit #39551](https://mixkit.co/free-stock-video/cheerful-man-and-woman-dancing-salsa-39551/) | Mixkit License |
+| `public/images/stock/dance-floor.jpg` | Still from *Close up of people dancing in a busy dance hall* | [Mixkit #49235](https://mixkit.co/free-stock-video/close-up-of-people-dancing-in-a-busy-dance-hall-49235/) | Mixkit License |
+
+Fonts are self-hosted: Inter, DM Mono, and Big Shoulders Display (SIL Open Font License).

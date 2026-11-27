@@ -5,19 +5,35 @@ import { htmlLang, pagePath, switchLang, withBase, type Lang } from "../lib/path
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import StickyCtas from "../components/StickyCtas.astro";
+import settings from "../content/site/settings.json";
 
 interface Props {
   lang: Lang;
   title?: string;
   description?: string;
   currentPath?: string;
+  image?: string;
 }
-
-const { lang, title, description, currentPath = Astro.url.pathname } = Astro.props;
+const { lang, title, description, currentPath = Astro.url.pathname, image } = Astro.props;
 const copy = t(lang);
-const pageTitle = title ? `${title} — ${copy.siteTitle}` : `${copy.siteTitleEs} · ${copy.siteTitle}`;
+const siteName = lang === "es" ? copy.siteTitleEs : copy.siteTitle;
+const pageTitle = title ? `${title} — ${siteName}` : `${copy.siteTitleEs} · ${copy.siteTitle}`;
 const desc = description || copy.seo.home;
 const canonical = new URL(currentPath, Astro.site);
+const ogImage = new URL(withBase(image || "/images/og-home.jpg"), Astro.site);
+const other = switchLang(lang, currentPath);
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  name: settings.legalName,
+  alternateName: [settings.publicNameEs, settings.publicNameEn],
+  foundingDate: settings.registered,
+  identifier: settings.societyNumber,
+  email: settings.email,
+  url: String(Astro.site) + withBase("/").replace(/\/$/, "") + "/",
+  areaServed: "Kamloops, British Columbia, Canada",
+  sameAs: [settings.facebookUrl, settings.instagramUrl, settings.orgbookUrl],
+};
 ---
 <!doctype html>
 <html lang={htmlLang(lang)}>
@@ -26,17 +42,26 @@ const canonical = new URL(currentPath, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={desc} />
+    <meta name="theme-color" content="#07090d" />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang={lang === "en" ? "es" : "en-CA"} href={new URL(switchLang(lang, currentPath), Astro.site)} />
+    <link rel="alternate" hreflang="en-CA" href={new URL(lang === "en" ? currentPath : other, Astro.site)} />
+    <link rel="alternate" hreflang="es" href={new URL(lang === "es" ? currentPath : other, Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(pagePath("en"), Astro.site)} />
     <link rel="icon" href={withBase("/favicon.png")} type="image/png" />
     <link rel="apple-touch-icon" href={withBase("/apple-touch-icon.png")} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={desc} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content={new URL(withBase("/images/logos/wordmark.png"), Astro.site)} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={lang === "es" ? "es" : "en_CA"} />
+    <meta property="og:locale:alternate" content={lang === "es" ? "en_CA" : "es"} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
