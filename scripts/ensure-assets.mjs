@@ -68,8 +68,17 @@ async function ensureHero() {
     if (!existsSync(mp4)) writeFileSync(mp4, readFileSync(tmp));
     console.warn("ffmpeg not found; using the Mixkit MP4 as-is and skipping WebM/poster encode.");
   }
+  mkdirSync(dirname(still), { recursive: true });
   if (existsSync(poster) && !existsSync(still)) {
     writeFileSync(still, readFileSync(poster));
+  }
+  const posterWebp = join(root, "public/videos/hero-poster.webp");
+  const stillWebp = join(root, "public/images/stock/papel-picado.webp");
+  if (have("ffmpeg") && existsSync(poster) && !existsSync(posterWebp)) {
+    execFileSync("ffmpeg", ["-y", "-i", poster, posterWebp], { stdio: "inherit" });
+  }
+  if (existsSync(posterWebp) && !existsSync(stillWebp)) {
+    writeFileSync(stillWebp, readFileSync(posterWebp));
   }
 }
 
