@@ -13,7 +13,7 @@ A short guide for the board and volunteers. You do not need to write code.
 2. Open [https://app.pagescms.org](https://app.pagescms.org) and sign in with that GitHub account.
 3. Choose the repository **adrianvo85/hispanic-society-kamloops**.
 4. Edit the collection you need (Events, Board, Sponsors, Volunteer roles, Resolutions, Site settings).
-5. Save. GitHub Actions will rebuild the public site, usually within a few minutes.
+5. Save. Your change is stored in the repository.
 
 There is also an optional editor at `/admin/` (Decap CMS). It needs a one-time free GitHub OAuth setup before login works. Until then, use Pages CMS.
 
@@ -39,7 +39,7 @@ A scheduled job can copy posts, photos and events from the Facebook page into th
 
 ### After you save
 
-Wait a few minutes and refresh the live site. If something looks wrong, you can revert the change in Pages CMS or ask tresD for help: [https://tresd.ca](https://tresd.ca).
+Once automatic publishing is switched on, wait a few minutes and refresh the live site. Until tresD finishes that last GitHub setup step, send a short message to tresD after you save so the change can be published. If something looks wrong, you can revert the change in Pages CMS or ask tresD for help: [https://tresd.ca](https://tresd.ca).
 
 ---
 
@@ -51,7 +51,7 @@ Wait a few minutes and refresh the live site. If something looks wrong, you can 
 2. Entra a [https://app.pagescms.org](https://app.pagescms.org) e inicia sesión con esa cuenta de GitHub.
 3. Elige el repositorio **adrianvo85/hispanic-society-kamloops**.
 4. Edita la colección que necesites (Eventos, Mesa directiva, Patrocinadores, Roles de voluntariado, Resoluciones, Configuración).
-5. Guarda. GitHub Actions volverá a construir el sitio público, por lo general en unos minutos.
+5. Guarda. El cambio queda guardado en el repositorio.
 
 También hay un editor opcional en `/admin/` (Decap CMS). Requiere un arreglo gratuito de OAuth con GitHub para poder entrar. Mientras tanto, usa Pages CMS.
 
@@ -77,4 +77,4 @@ Un proceso programado puede copiar publicaciones, fotos y eventos de la página 
 
 ### Después de guardar
 
-Espera unos minutos y recarga el sitio. Si algo se ve mal, puedes deshacer el cambio en Pages CMS o pedir ayuda a tresD: [https://tresd.ca](https://tresd.ca).
+Cuando la publicación automática esté activa, espera unos minutos y recarga el sitio. Hasta que tresD termine ese último paso en GitHub, mándale un mensaje breve después de guardar para que publiquen el cambio. Si algo se ve mal, puedes deshacer el cambio en Pages CMS o pedir ayuda a tresD: [https://tresd.ca](https://tresd.ca).

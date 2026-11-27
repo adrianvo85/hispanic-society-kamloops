@@ -2,8 +2,10 @@
 
 Public website for the **Hispanic Society of Kamloops / Sociedad Hispana de Kamloops** (BC Society S0071166). Built and donated by [tresD](https://tresd.ca).
 
-- Live site (GitHub Pages): https://adrianvo85.github.io/hispanic-society-kamloops/
+- Intended live URL (GitHub Pages): https://adrianvo85.github.io/hispanic-society-kamloops/
 - Default language: English, with a full Spanish version under `/es/`.
+- The built site is on the `gh-pages` branch. To attach it to that URL, a GitHub account admin should open **Settings → Pages**, choose **Deploy from a branch**, branch `gh-pages`, folder `/ (root)`, and save. The current token could not enable Pages from the API.
+- The Actions workflow files live in `docs/github-actions/`. They could not be pushed to `.github/workflows/` because the token lacks the `workflow` scope. Add them in the GitHub UI (or re-push with a token that has that scope) so Pages CMS saves and the Facebook sync can rebuild the site automatically.
 
 ## Stack
 
