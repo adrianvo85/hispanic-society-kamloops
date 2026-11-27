@@ -2,7 +2,8 @@
 import Base from "../../../layouts/Base.astro";
 import View from "../../../components/ContactPage.astro";
 import { pagePath } from "../../../lib/paths";
+import { t } from "../../../lib/i18n";
 ---
-<Base lang="es" title="Contacto" currentPath={pagePath("es", "contact")}>
+<Base lang="es" title="Contacto" currentPath={pagePath("es", "contact")} description={t("es").seo.contact}>
   <View lang="es" />
 </Base>
