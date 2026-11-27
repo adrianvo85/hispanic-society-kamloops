@@ -5,7 +5,9 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const copy = t(lang);
 ---
-<div class="sticky-cta" aria-label={lang === "es" ? "Acciones" : "Quick actions"}>
-  <a class="btn btn-primary" href={pagePath(lang, "donate")}>{copy.donate.sticky}</a>
-  <a class="btn btn-teal" href={pagePath(lang, "volunteer")}>{copy.volunteer.sticky}</a>
+<div class="sticky-cta">
+  <a class="btn btn-primary" href={pagePath(lang, "donate")}>
+    <span class="dot" aria-hidden="true"></span>
+    {copy.donate.sticky}
+  </a>
 </div>
