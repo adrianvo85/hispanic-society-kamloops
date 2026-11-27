@@ -3,7 +3,7 @@
 # or use Pages CMS instead (see docs/guia-actualizar.md).
 locale: en
 display_url: https://adrianvo85.github.io/hispanic-society-kamloops/
-logo_url: /hispanic-society-kamloops/images/logos/hsk-circular.png
+logo_url: /hispanic-society-kamloops/images/logos/logo-official-512.png
 
 backend:
   name: github
@@ -182,3 +182,43 @@ collections:
               - { name: perks_es, label: Perks ES, widget: list, field: { name: perk, widget: string } }
           - { name: rules_en, label: Rules EN, widget: list, field: { name: rule, widget: string } }
           - { name: rules_es, label: Rules ES, widget: list, field: { name: rule, widget: string } }
+
+  - name: letter
+    label: Letter from the President
+    files:
+      - name: letter
+        label: Letter text
+        file: src/content/site/letter.json
+        fields:
+          - { name: draft, label: Draft (show DRAFT badge), widget: boolean }
+          - { name: presidentName_en, label: "President name (EN — use [President's name — pending] until confirmed)", widget: string }
+          - { name: presidentName_es, label: Nombre de la presidencia (ES), widget: string }
+          - { name: role_en, label: Role (EN), widget: string }
+          - { name: role_es, label: Cargo (ES), widget: string }
+          - { name: date_en, label: Date (EN), widget: string }
+          - { name: date_es, label: Fecha (ES), widget: string }
+          - { name: greeting_en, label: Greeting (EN), widget: string }
+          - { name: greeting_es, label: Saludo (ES), widget: string }
+          - { name: body_en, label: Letter body (EN), widget: text }
+          - { name: body_es, label: Cuerpo de la carta (ES), widget: text }
+          - { name: closing_en, label: Closing (EN), widget: string }
+          - { name: closing_es, label: Despedida (ES), widget: string }
+  - name: event-jobs
+    label: Paid event jobs
+    folder: src/content/event-jobs
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug, widget: string }
+      - { name: example, label: Example posting, widget: boolean, default: true }
+      - { name: title_en, label: Title (English), widget: string }
+      - { name: title_es, label: Title (Spanish), widget: string }
+      - { name: event_en, label: Event (EN), widget: string }
+      - { name: event_es, label: Evento (ES), widget: string }
+      - { name: date, label: Date, widget: string, required: false }
+      - { name: pay_en, label: Pay (EN, e.g. Set by the board), widget: string }
+      - { name: pay_es, label: Pago (ES), widget: string }
+      - { name: order, label: Order, widget: number }
+      - { name: body, label: Description (English, then <!-- ES --> and Spanish), widget: markdown }
