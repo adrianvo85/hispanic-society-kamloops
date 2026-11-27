@@ -5,7 +5,7 @@ Public website for the **Hispanic Society of Kamloops / Sociedad Hispana de Kaml
 - Intended live URL (GitHub Pages): https://adrianvo85.github.io/hispanic-society-kamloops/
 - Default language: English, with a full Spanish version under `/es/`.
 - The built site is on the `gh-pages` branch. To attach it to that URL, a GitHub account admin should open **Settings → Pages**, choose **Deploy from a branch**, branch `gh-pages`, folder `/ (root)`, and save. The current token could not enable Pages from the API.
-- The Actions workflow files live in `docs/github-actions/`. They could not be pushed to `.github/workflows/` because the token lacks the `workflow` scope. Add them in the GitHub UI (or re-push with a token that has that scope) so Pages CMS saves and the Facebook sync can rebuild the site automatically.
+- GitHub Actions workflows live in `.github/workflows/`. `deploy.yml` builds the site on push to `main` and publishes `dist` to the `gh-pages` branch. `facebook-sync.yml` runs every four hours and skips the sync when `FB_PAGE_TOKEN` is not set.
 
 ## Stack
 
@@ -46,15 +46,16 @@ Site built and donated by tresD. Brand marks and event posters remain property o
 
 ## Visual identity and media credits
 
-The circular mark, mountain emblem and wordmarks in `public/images/logos/logo-*.svg` are **high-quality vector reconstructions proposed by tresD**, based on the Society’s public logos. They are pending the Society’s approval and are labelled as a proposal in the site footer.
+The header, footer, favicon and social image use the Society’s **official 2026 logo** (`public/images/logos/logo-official.png` and the 512px UI versions). The mark was supplied as a JPG and prepared as a high-resolution transparent PNG/WebP (circular badge, design unchanged). Older reconstructed marks remain in `public/images/logos/` for archive only and are not used on the live pages.
 
-Hero video and atmospheric stills are free-license stock. They are **not** photographs of Society events. Event galleries use only the Society’s public posters.
+Hero video and atmospheric stills are free-license stock. They are not photographs of Society events. Event galleries use only the Society’s public posters. Stock is credited here and is not labelled on the public pages.
 
 | File | Work | Author / source | Licence |
 | --- | --- | --- | --- |
-| `public/videos/hero.webm` / `hero.mp4` / `hero-poster.jpg` | *Crowd dancing in a music festival by night* (8s loop, muted) | [Mixkit #13265](https://mixkit.co/free-stock-video/crowd-dancing-in-a-music-festival-by-night-13265/) | [Mixkit License](https://mixkit.co/license/) |
-| `public/images/stock/festival-night.jpg` | Still from *Festival crowd jumping and dancing at night* | [Mixkit #14088](https://mixkit.co/free-stock-video/festival-crowd-jumping-and-dancing-at-night-14088/) | Mixkit License |
-| `public/images/stock/salsa-studio.jpg` | Still from *Cheerful man and woman dancing salsa* | [Mixkit #39551](https://mixkit.co/free-stock-video/cheerful-man-and-woman-dancing-salsa-39551/) | Mixkit License |
-| `public/images/stock/dance-floor.jpg` | Still from *Close up of people dancing in a busy dance hall* | [Mixkit #49235](https://mixkit.co/free-stock-video/close-up-of-people-dancing-in-a-busy-dance-hall-49235/) | Mixkit License |
+| `public/videos/hero.webm` / `hero.mp4` / `hero-poster.jpg` | *Day of the Dead altar under color changing lights* (papel picado, cempasúchil, ~16s muted loop) | [Mixkit #34435](https://mixkit.co/free-stock-video/day-of-the-dead-altar-under-color-changing-lights-34435/) | [Mixkit License](https://mixkit.co/license/) |
+| `public/images/stock/papel-picado.jpg` | Still from Mixkit #34435, used on the volunteer band | Same as above | Mixkit License |
+| `public/images/stock/festival-night.jpg` | Still from *Festival crowd jumping and dancing at night* (archive) | [Mixkit #14088](https://mixkit.co/free-stock-video/festival-crowd-jumping-and-dancing-at-night-14088/) | Mixkit License |
+| `public/images/stock/salsa-studio.jpg` | Still from *Cheerful man and woman dancing salsa* (archive) | [Mixkit #39551](https://mixkit.co/free-stock-video/cheerful-man-and-woman-dancing-salsa-39551/) | Mixkit License |
+| `public/images/stock/dance-floor.jpg` | Still from *Close up of people dancing in a busy dance hall* (archive) | [Mixkit #49235](https://mixkit.co/free-stock-video/close-up-of-people-dancing-in-a-busy-dance-hall-49235/) | Mixkit License |
 
 Fonts are self-hosted: Inter, DM Mono, and Big Shoulders Display (SIL Open Font License).

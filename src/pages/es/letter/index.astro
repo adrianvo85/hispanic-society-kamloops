@@ -1,0 +1,9 @@
+---
+import Base from "../../../layouts/Base.astro";
+import View from "../../../components/LetterPage.astro";
+import { pagePath } from "../../../lib/paths";
+import { t } from "../../../lib/i18n";
+---
+<Base lang="es" title="Carta de la Presidencia" currentPath={pagePath("es", "letter")} description={t("es").seo.letter}>
+  <View lang="es" />
+</Base>
