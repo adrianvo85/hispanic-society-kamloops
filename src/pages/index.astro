@@ -1,0 +1,8 @@
+---
+import Base from "../layouts/Base.astro";
+import HomePage from "../components/HomePage.astro";
+import { pagePath } from "../lib/paths";
+---
+<Base lang="en" currentPath={pagePath("en")}>
+  <HomePage lang="en" />
+</Base>

@@ -1,0 +1,51 @@
+---
+import { t, pick } from "../lib/i18n";
+import { withBase, type Lang } from "../lib/paths";
+import { formatDate } from "../lib/dates";
+import { getCollection } from "astro:content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const copy = t(lang);
+const board = (await getCollection("board")).sort((a,b) => a.data.order - b.data.order);
+const resolutions = (await getCollection("resolutions")).sort((a,b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">{copy.board.eyebrow}</p>
+    <h1>{copy.board.title}</h1>
+    <p class="lede">{copy.board.body}</p>
+  </div>
+</section>
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="board-grid">
+      {board.map((m) => (
+        <article class:list={["board-card", m.data.photo && m.data.permissionToPublish && "has-photo"]}>
+          <div class="board-photo">
+            {m.data.photo && m.data.permissionToPublish && <img src={withBase(m.data.photo)} alt="" />}
+          </div>
+          <div class="meta">
+            {(!m.data.permissionToPublish || m.data.placeholder) && <span class="badge-example">{copy.common.placeholder}</span>}
+            <h3>{m.data.permissionToPublish ? pick(lang, m.data.name_en, m.data.name_es) : copy.board.pending}</h3>
+            <p class="muted-sm">{pick(lang, m.data.role_en, m.data.role_es)}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <h2 style="margin-top:4rem">{copy.board.minutesTitle}</h2>
+    <p class="lede">{copy.board.minutesBody}</p>
+    <ul class="minutes">
+      {resolutions.map((r) => (
+        <li>
+          <div>
+            {r.data.example && <span class="badge-example">{copy.board.example}</span>}
+            <h3 style="font-family:var(--serif);font-size:1.4rem;margin-top:0.3rem">{pick(lang, r.data.title_en, r.data.title_es)}</h3>
+            <p class="muted-sm">{r.data.kind === "resolution" ? copy.board.kindResolution : copy.board.kindMinutes} · {formatDate(r.data.date, lang, { weekday: undefined })}</p>
+          </div>
+          {r.data.pdf && <a class="btn btn-ghost" href={withBase(r.data.pdf)}>{copy.board.download}</a>}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

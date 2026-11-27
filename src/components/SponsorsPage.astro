@@ -1,0 +1,85 @@
+---
+import ContactForm from "./ContactForm.astro";
+import { t, pick } from "../lib/i18n";
+import { withBase, type Lang } from "../lib/paths";
+import { getCollection } from "astro:content";
+import program from "../content/site/sponsorship.json";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const copy = t(lang);
+const sponsors = await getCollection("sponsors");
+const rules = lang === "es" ? program.rules_es : program.rules_en;
+const tiers = program.annualTiers;
+---
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">{copy.sponsorProgram.eyebrow}</p>
+    <h1>{copy.sponsorProgram.title}</h1>
+    <p class="lede">{copy.sponsorProgram.body}</p>
+  </div>
+</section>
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <h2>{copy.sponsors.wallTitle}</h2>
+    <div class="wall" style="margin-top:1.2rem">
+      {sponsors.map((s) => (
+        <a class="wall-item" href={s.data.url || "#"}>
+          {s.data.logo ? <img src={withBase(s.data.logo)} alt={s.data.name} /> : <strong>{s.data.name}</strong>}
+          <p class="muted-sm">{pick(lang, s.data.tierLabel_en, s.data.tierLabel_es) || s.data.name}</p>
+        </a>
+      ))}
+    </div>
+
+    <h2 style="margin-top:4rem">{copy.sponsorProgram.compare}</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>{lang === "es" ? "Nivel" : "Tier"}</th>
+            <th>{lang === "es" ? "Aporte anual" : "Annual gift"}</th>
+            <th>{copy.sponsorProgram.perk}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tiers.map((tier) => (
+            <tr>
+              <td>
+                <strong>{lang === "es" ? tier.name_es : tier.name_en}</strong>
+                {tier.exclusive && <div class="badge-example">{copy.sponsorProgram.exclusive}</div>}
+              </td>
+              <td class="price">${tier.amount.toLocaleString("en-CA")}</td>
+              <td>
+                <ul class="rules">
+                  {(lang === "es" ? tier.perks_es : tier.perks_en).map((p) => <li>{p}</li>)}
+                </ul>
+              </td>
+            </tr>
+          ))}
+          <tr>
+            <td><strong>{copy.sponsorProgram.perEvent}</strong></td>
+            <td class="price">{copy.sponsorProgram.perEventFrom}</td>
+            <td>{lang === "es" ? "Presencia en un evento específico, sujeta a aprobación." : "Presence at a specific event, subject to approval."}</td>
+          </tr>
+          <tr>
+            <td><strong>{copy.sponsorProgram.inKind}</strong></td>
+            <td class="price">—</td>
+            <td>{copy.sponsorProgram.inKindBody}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>{copy.sponsorProgram.rulesTitle}</h2>
+    <ul class="rules">
+      {rules.map((r) => <li>{r}</li>)}
+    </ul>
+    <p style="margin:1.4rem 0 3rem">
+      <a class="btn btn-dark" href={withBase("/docs/sponsorship-package.pdf")}>{copy.sponsorProgram.pdf}</a>
+    </p>
+    <ContactForm
+      lang={lang}
+      kind="sponsor"
+      tiers={tiers.map((t) => ({ value: t.id, label: `${lang === "es" ? t.name_es : t.name_en} ($${t.amount})` }))}
+    />
+  </div>
+</section>

@@ -1,0 +1,149 @@
+---
+import EventCard from "./EventCard.astro";
+import Hero from "./Hero.astro";
+import { t, pick } from "../lib/i18n";
+import { pagePath, type Lang } from "../lib/paths";
+import { allEvents, splitEvents } from "../lib/events";
+import { getCollection } from "astro:content";
+import settings from "../content/site/settings.json";
+import postsFeed from "../content/facebook/posts.json";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const copy = t(lang);
+const { upcoming, past } = splitEvents(await allEvents());
+const featuredPast = past.filter((e) => e.data.featured).slice(0, 3);
+const pastPreview = featuredPast.length ? featuredPast : past.slice(0, 3);
+const sponsors = await getCollection("sponsors");
+const partners = (await getCollection("partners")).sort((a, b) => a.data.order - b.data.order);
+const fbPosts = (postsFeed.items || []).slice(0, 3);
+---
+<Hero lang={lang} />
+
+<section class="section" id="events">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">{copy.upcoming.eyebrow}</p>
+      <h2>{copy.upcoming.title}</h2>
+    </div>
+    {upcoming.length === 0 ? (
+      <p class="empty-state">{copy.upcoming.empty}</p>
+    ) : (
+      <div class="grid-cards">
+        {upcoming.map((event) => <EventCard lang={lang} event={event} />)}
+      </div>
+    )}
+
+    {pastPreview.length > 0 && (
+      <div style="margin-top:4rem">
+        <div class="section-head">
+          <p class="eyebrow">{copy.galleryCta.eyebrow}</p>
+          <h2>{copy.upcoming.pastTitle}</h2>
+          <p class="lede">{copy.galleryCta.body}</p>
+        </div>
+        <div class="grid-cards">
+          {pastPreview.map((event) => <EventCard lang={lang} event={event} />)}
+        </div>
+        <p style="margin-top:1.5rem">
+          <a class="btn btn-ghost" href={pagePath(lang, "events")}>{copy.upcoming.allEvents}</a>
+        </p>
+      </div>
+    )}
+  </div>
+</section>
+
+{fbPosts.length > 0 && (
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow">{copy.fb.eyebrow}</p>
+      <h2>{copy.fb.title}</h2>
+      <div class="grid-cards" style="margin-top:1.5rem">
+        {fbPosts.map((p: any) => (
+          <a class="card" href={p.permalink} rel="noopener">
+            {p.picture && <div class="card-media"><img src={p.picture} alt="" /></div>}
+            <div class="card-body"><p>{p.message}</p></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<section class="section section-dark" id="donate">
+  <div class="wrap">
+    <p class="eyebrow">{copy.donate.eyebrow}</p>
+    <h2>{copy.donate.title}</h2>
+    <p class="lede">{copy.donate.body}</p>
+    <div class="amounts">
+      {copy.donate.amounts.map((n) => {
+        const href = settings.zeffyDonateUrl || pagePath(lang, "donate");
+        return (
+          <a class="amount" href={href}>
+            <strong>${n}</strong>
+            <span>CAD</span>
+          </a>
+        );
+      })}
+    </div>
+    {settings.zeffyDonateUrl ? (
+      <a class="btn btn-primary" href={settings.zeffyDonateUrl} rel="noopener">{copy.donate.cta}</a>
+    ) : (
+      <p class="note" style="color:rgba(255,255,255,0.75)">{copy.donate.pending}</p>
+    )}
+    <p class="lede" style="margin-top:1.2rem">{copy.donate.invoiceNote}</p>
+    <p style="margin-top:1.4rem">
+      <a class="btn btn-light" href={pagePath(lang, "donate")}>{copy.donate.cta}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section" id="volunteer">
+  <div class="wrap">
+    <p class="eyebrow">{copy.volunteer.eyebrow}</p>
+    <h2>{copy.volunteer.title}</h2>
+    <p class="lede">{copy.volunteer.body}</p>
+    <p style="margin-top:1.6rem">
+      <a class="btn btn-dark" href={pagePath(lang, "volunteer")}>{copy.volunteer.sticky}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section" id="sponsors" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">{copy.sponsors.eyebrow}</p>
+    <h2>{copy.sponsors.wallTitle}</h2>
+    <div class="wall" style="margin-top:1.5rem">
+      {sponsors.map((s) => (
+        <a class="wall-item" href={s.data.url || pagePath(lang, "sponsors")}>
+          {s.data.logo ? <img src={s.data.logo} alt={s.data.name} /> : <strong>{s.data.name}</strong>}
+          <p class="muted-sm">{pick(lang, s.data.tierLabel_en, s.data.tierLabel_es)}</p>
+        </a>
+      ))}
+    </div>
+    <p style="margin-top:1.5rem">
+      <a class="btn btn-ghost" href={pagePath(lang, "sponsors")}>{copy.sponsors.programCta}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section" id="about" style="background:var(--paper-2)">
+  <div class="wrap">
+    <p class="eyebrow">{copy.about.eyebrow}</p>
+    <h2>{copy.about.title}</h2>
+    <p class="lede">{lang === "es" ? settings.chlavmDescriptionEs : settings.chlavmDescriptionEn}</p>
+    <p class="note">{copy.about.directoryNote}</p>
+    <p class="lede" style="margin-top:1.2rem">{copy.about.history}</p>
+    <h3 style="font-family:var(--serif);font-size:2rem;margin:2.5rem 0 1rem">{copy.about.partners}</h3>
+    <div class="partners">
+      {partners.map((p) => (
+        <a class="partner" href={p.data.url} rel="noopener">
+          <h3>{pick(lang, p.data.name_en, p.data.name_es)}</h3>
+        </a>
+      ))}
+    </div>
+    <p style="margin-top:1.5rem">
+      <a class="btn btn-ghost" href={pagePath(lang, "about")}>{copy.nav.about}</a>
+      <a class="btn btn-dark" href={pagePath(lang, "contact")} style="margin-left:0.4rem">{copy.nav.contact}</a>
+    </p>
+  </div>
+</section>

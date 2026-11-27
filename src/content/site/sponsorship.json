@@ -1,0 +1,41 @@
+{
+  "currency": "CAD",
+  "termMonths": 12,
+  "annualTiers": [
+    { "id": "friend", "name_en": "Friend", "name_es": "Amigo/a", "amount": 250, "exclusive": false,
+      "perks_en": ["Logo on the website sponsor wall", "Thank-you in the year-end impact note"],
+      "perks_es": ["Logo en el muro de patrocinadores del sitio", "Agradecimiento en la nota de impacto de fin de año"] },
+    { "id": "bronze", "name_en": "Bronze", "name_es": "Bronce", "amount": 500, "exclusive": false,
+      "perks_en": ["All Friend benefits", "Logo on selected event posters", "Social media thank-you"] ,
+      "perks_es": ["Todos los beneficios de Amigo/a", "Logo en afiches de eventos seleccionados", "Agradecimiento en redes"] },
+    { "id": "silver", "name_en": "Silver", "name_es": "Plata", "amount": 1000, "exclusive": false,
+      "perks_en": ["All Bronze benefits", "Logo on the main annual poster", "Mention at Fiesta Latina"],
+      "perks_es": ["Todos los beneficios de Bronce", "Logo en el afiche anual principal", "Mención en la Fiesta Latina"] },
+    { "id": "gold", "name_en": "Gold", "name_es": "Oro", "amount": 2500, "exclusive": false,
+      "perks_en": ["All Silver benefits", "Preferred logo placement", "Short remarks opportunity at a flagship event (if scheduled)"],
+      "perks_es": ["Todos los beneficios de Plata", "Ubicación preferente del logo", "Breve intervención en un evento principal (si se programa)"] },
+    { "id": "title", "name_en": "Title", "name_es": "Patrocinio principal", "amount": 5000, "exclusive": true,
+      "perks_en": ["Exclusive title sponsorship for the year", "All Gold benefits", "Lead billing on the website and flagship event materials"],
+      "perks_es": ["Patrocinio principal exclusivo del año", "Todos los beneficios de Oro", "Mención principal en el sitio y en materiales del evento insignia"] }
+  ],
+  "perEventFrom": 150,
+  "inKind": true,
+  "rules_en": [
+    "Sponsorships run for 12 months from the date of acceptance, unless a per-event package is agreed.",
+    "Every sponsorship requires board approval.",
+    "Political parties are not eligible.",
+    "Approved sponsor logos are added to the website within 10 days of receiving a usable file.",
+    "Payment is accepted via Zeffy or electronic transfer.",
+    "A tax receipt is issued only if the Society is confirmed as a CRA-registered charity. Otherwise the Society issues a sponsorship invoice.",
+    "Sponsors receive a year-end impact report."
+  ],
+  "rules_es": [
+    "Los patrocinios duran 12 meses desde la fecha de aceptación, salvo un paquete por evento acordado.",
+    "Todo patrocinio requiere la aprobación de la mesa directiva.",
+    "Los partidos políticos no son elegibles.",
+    "Los logos aprobados se agregan al sitio dentro de los 10 días de recibir un archivo usable.",
+    "El pago se acepta por Zeffy o transferencia electrónica.",
+    "Solo se emite recibo fiscal si se confirma que la sociedad es una charity registrada ante la CRA. Si no, se emite una factura de patrocinio.",
+    "Las personas patrocinadoras reciben un informe de impacto a fin de año."
+  ]
+}

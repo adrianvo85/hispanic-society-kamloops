@@ -1,0 +1,36 @@
+---
+import { t } from "../lib/i18n";
+import { pagePath, withBase, type Lang } from "../lib/paths";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const copy = t(lang);
+---
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <p class="eyebrow">{copy.hero.place}</p>
+      <h1>
+        {lang === "es" ? (
+          <>Sociedad Hispana<br />de Kamloops</>
+        ) : (
+          <>Hispanic Society<br />of Kamloops</>
+        )}
+      </h1>
+      <ul class="motto">
+        {copy.mottoWords.map((w) => <li><i></i>{w}</li>)}
+      </ul>
+      <p class="hero-lede">{copy.hero.lede}</p>
+      <a class="btn btn-light" href={pagePath(lang, "events")}>{copy.hero.watchEvents}</a>
+    </div>
+    <div class="hero-visual" data-logo-stage>
+      <canvas class="logo-3d" data-logo-canvas hidden></canvas>
+      <div class="logo-3d-fallback" data-logo-css hidden>
+        <img src={withBase("/images/logos/hsk-circular.png")} alt="HSK" width="296" height="259" />
+      </div>
+      <div class="logo-2d" data-logo-flat>
+        <img src={withBase("/images/logos/hsk-circular.png")} alt="HSK" width="296" height="259" />
+      </div>
+    </div>
+  </div>
+  <p class="scroll-hint">{copy.hero.scroll}</p>
+</section>

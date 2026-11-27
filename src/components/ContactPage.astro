@@ -1,0 +1,34 @@
+---
+import ContactForm from "./ContactForm.astro";
+import { t } from "../lib/i18n";
+import type { Lang } from "../lib/paths";
+import settings from "../content/site/settings.json";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const copy = t(lang);
+---
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">{copy.contact.eyebrow}</p>
+    <h1>{copy.contact.title}</h1>
+    <p class="lede">{copy.contact.body}</p>
+  </div>
+</section>
+<section class="section" style="padding-top:0">
+  <div class="wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:3rem">
+    <div>
+      <p class="eyebrow">{copy.contact.email}</p>
+      <p style="font-size:1.2rem"><a href={`mailto:${settings.email}`}>{settings.email}</a></p>
+      <p class="eyebrow" style="margin-top:1.4rem">{copy.contact.facebook}</p>
+      <p><a href={settings.facebookUrl} rel="noopener">facebook.com/Hispanic.Society.Kamloops</a></p>
+      <p class="eyebrow" style="margin-top:1.4rem">{copy.contact.instagram}</p>
+      <p><a href={settings.instagramUrl} rel="noopener">{settings.instagramHandle}</a></p>
+    </div>
+    <ContactForm lang={lang} kind="contact" />
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) {
+    section .wrap { grid-template-columns: 1fr !important; }
+  }
+</style>

@@ -1,0 +1,89 @@
+---
+import { t } from "../lib/i18n";
+import type { Lang } from "../lib/paths";
+import settings from "../content/site/settings.json";
+
+interface Props {
+  lang: Lang;
+  kind: "contact" | "volunteer" | "sponsor";
+  roles?: { value: string; label: string }[];
+  tiers?: { value: string; label: string }[];
+}
+const { lang, kind, roles = [], tiers = [] } = Astro.props;
+const copy = t(lang);
+const actionMap = {
+  volunteer: settings.formspreeVolunteer,
+  sponsor: settings.formspreeSponsor,
+  contact: settings.formspreeVolunteer,
+};
+const action = actionMap[kind];
+const pending = action.includes("TODO");
+const subject =
+  kind === "volunteer" ? "Volunteer interest — Hispanic Society of Kamloops" :
+  kind === "sponsor" ? "Sponsorship interest — Hispanic Society of Kamloops" :
+  "Website message — Hispanic Society of Kamloops";
+const mailto = `mailto:${settings.email}?subject=${encodeURIComponent(subject)}`;
+const title =
+  kind === "volunteer" ? copy.volunteer.formTitle :
+  kind === "sponsor" ? copy.sponsorProgram.formTitle :
+  copy.contact.formTitle;
+const submit =
+  kind === "volunteer" ? copy.volunteer.submit :
+  kind === "sponsor" ? copy.sponsorProgram.submit :
+  copy.contact.submit;
+---
+<div>
+  <h3 style="font-family:var(--serif);font-size:1.8rem;margin-bottom:0.8rem">{title}</h3>
+  {pending && (
+    <p class="note">
+      {kind === "volunteer" || kind === "sponsor" ? copy.volunteer.formPending : copy.volunteer.formPending}
+      {" "}<a href={mailto}>{settings.email}</a>
+    </p>
+  )}
+  <form class="stack" method="POST" action={pending ? mailto : action} style="margin-top:1rem">
+    {kind === "sponsor" ? (
+      <>
+        <label>{copy.sponsorProgram.org}<input name="organization" required /></label>
+        <label>{copy.sponsorProgram.contact}<input name="name" required /></label>
+      </>
+    ) : (
+      <label>{copy.volunteer.name}<input name="name" required /></label>
+    )}
+    <label>{copy.volunteer.email}<input type="email" name="email" required /></label>
+    {kind === "volunteer" && (
+      <>
+        <label>{copy.volunteer.phone}<input name="phone" /></label>
+        <label>
+          {copy.volunteer.role}
+          <select name="role">
+            {roles.map((r) => <option value={r.value}>{r.label}</option>)}
+          </select>
+        </label>
+        <label>
+          {copy.volunteer.langPref}
+          <select name="language">
+            <option value="es">Español</option>
+            <option value="en">English</option>
+            <option value="both">EN + ES</option>
+          </select>
+        </label>
+      </>
+    )}
+    {kind === "sponsor" && (
+      <label>
+        {copy.sponsorProgram.tier}
+        <select name="tier">
+          {tiers.map((r) => <option value={r.value}>{r.label}</option>)}
+          <option value="per-event">{lang === "es" ? "Por evento" : "Per-event"}</option>
+          <option value="in-kind">{lang === "es" ? "En especie" : "In-kind"}</option>
+        </select>
+      </label>
+    )}
+    <label>
+      {kind === "contact" ? copy.contact.message : kind === "sponsor" ? copy.sponsorProgram.message : copy.volunteer.message}
+      <textarea name="message" required></textarea>
+    </label>
+    <input type="hidden" name="_subject" value={subject} />
+    <button class="btn btn-dark" type="submit">{submit}</button>
+  </form>
+</div>

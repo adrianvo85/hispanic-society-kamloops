@@ -1,0 +1,109 @@
+# Pages CMS configuration
+# Open https://app.pagescms.org and sign in with a GitHub account that can edit this repo.
+media:
+  input: public/uploads
+  output: /uploads
+
+content:
+  - name: settings
+    label: Site settings
+    type: file
+    path: src/content/site/settings.json
+    format: json
+    fields:
+      - { name: email, label: Public email, type: string }
+      - { name: facebookUrl, label: Facebook URL, type: string }
+      - { name: instagramUrl, label: Instagram URL, type: string }
+      - { name: instagramHandle, label: Instagram handle, type: string }
+      - { name: zeffyDonateUrl, label: Zeffy donation URL, type: string }
+      - { name: formspreeVolunteer, label: Formspree volunteer URL, type: string }
+      - { name: formspreeSponsor, label: Formspree sponsor URL, type: string }
+      - { name: craRegisteredCharity, label: CRA registered charity, type: boolean }
+  - name: events
+    label: Events
+    type: collection
+    path: src/content/events
+    filename: "{slug}.md"
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug, type: string }
+      - { name: status, label: Status, type: select, options: [upcoming, past, draft] }
+      - { name: placeholder, label: Placeholder, type: boolean }
+      - { name: title_en, label: Title (EN), type: string }
+      - { name: title_es, label: Title (ES), type: string }
+      - { name: subtitle_en, label: Subtitle (EN), type: string }
+      - { name: subtitle_es, label: Subtitle (ES), type: string }
+      - { name: date, label: Date, type: date }
+      - { name: startTime, label: Start time, type: string }
+      - { name: endTime, label: End time, type: string }
+      - { name: venue, label: Venue, type: string }
+      - { name: address, label: Address, type: string }
+      - { name: ticketsUrl, label: Zeffy / ticket URL, type: string }
+      - { name: ticketsStatus, label: Ticket status, type: select, options: [open, closed, free, partner, none] }
+      - { name: priceFrom, label: Price from, type: number }
+      - { name: hero, label: Hero image, type: image }
+      - { name: featured, label: Featured, type: boolean }
+      - { name: body, label: Description, type: rich-text }
+  - name: board
+    label: Board
+    type: collection
+    path: src/content/board
+    filename: "{slug}.md"
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug, type: string }
+      - { name: permissionToPublish, label: Permission to publish, type: boolean }
+      - { name: placeholder, label: Placeholder, type: boolean }
+      - { name: name_en, label: Name (EN), type: string }
+      - { name: name_es, label: Name (ES), type: string }
+      - { name: role_en, label: Role (EN), type: string }
+      - { name: role_es, label: Role (ES), type: string }
+      - { name: photo, label: Photo, type: image }
+      - { name: order, label: Order, type: number }
+  - name: resolutions
+    label: Resolutions and minutes
+    type: collection
+    path: src/content/resolutions
+    filename: "{slug}.md"
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug, type: string }
+      - { name: example, label: Example only, type: boolean }
+      - { name: title_en, label: Title (EN), type: string }
+      - { name: title_es, label: Title (ES), type: string }
+      - { name: date, label: Date, type: date }
+      - { name: kind, label: Kind, type: select, options: [minutes, resolution, other] }
+      - { name: pdf, label: PDF, type: file }
+  - name: sponsors
+    label: Sponsors
+    type: collection
+    path: src/content/sponsors
+    filename: "{slug}.md"
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug, type: string }
+      - { name: name, label: Name, type: string }
+      - { name: tier, label: Tier, type: string }
+      - { name: tierLabel_en, label: Tier label (EN), type: string }
+      - { name: tierLabel_es, label: Tier label (ES), type: string }
+      - { name: logo, label: Logo, type: image }
+      - { name: url, label: Website, type: string }
+      - { name: year, label: Year, type: number }
+  - name: volunteer-roles
+    label: Volunteer roles
+    type: collection
+    path: src/content/volunteer-roles
+    filename: "{slug}.md"
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug, type: string }
+      - { name: placeholder, label: Example role, type: boolean }
+      - { name: title_en, label: Title (EN), type: string }
+      - { name: title_es, label: Title (ES), type: string }
+      - { name: order, label: Order, type: number }
+      - { name: body, label: Description, type: rich-text }
+  - name: sponsorship
+    label: Sponsorship program
+    type: file
+    path: src/content/site/sponsorship.json
+    format: json

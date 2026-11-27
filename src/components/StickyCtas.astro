@@ -1,0 +1,11 @@
+---
+import { t } from "../lib/i18n";
+import { pagePath, type Lang } from "../lib/paths";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const copy = t(lang);
+---
+<div class="sticky-cta" aria-label={lang === "es" ? "Acciones" : "Quick actions"}>
+  <a class="btn btn-primary" href={pagePath(lang, "donate")}>{copy.donate.sticky}</a>
+  <a class="btn btn-teal" href={pagePath(lang, "volunteer")}>{copy.volunteer.sticky}</a>
+</div>

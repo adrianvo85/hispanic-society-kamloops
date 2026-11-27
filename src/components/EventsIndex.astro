@@ -1,0 +1,32 @@
+---
+import EventCard from "./EventCard.astro";
+import { t } from "../lib/i18n";
+import type { Lang } from "../lib/paths";
+import { allEvents, splitEvents } from "../lib/events";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const copy = t(lang);
+const { upcoming, past } = splitEvents(await allEvents());
+---
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">{copy.upcoming.eyebrow}</p>
+    <h1>{copy.nav.events}</h1>
+  </div>
+</section>
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <h2>{copy.upcoming.title}</h2>
+    {upcoming.length === 0 ? (
+      <p class="empty-state" style="margin-top:1rem">{copy.upcoming.empty}</p>
+    ) : (
+      <div class="grid-cards" style="margin-top:1.5rem">
+        {upcoming.map((event) => <EventCard lang={lang} event={event} />)}
+      </div>
+    )}
+    <h2 style="margin-top:4rem">{copy.upcoming.pastTitle}</h2>
+    <div class="grid-cards" style="margin-top:1.5rem">
+      {past.map((event) => <EventCard lang={lang} event={event} />)}
+    </div>
+  </div>
+</section>

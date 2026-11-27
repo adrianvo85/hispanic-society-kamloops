@@ -1,0 +1,17 @@
+---
+import Base from "../../../layouts/Base.astro";
+import EventDetail from "../../../components/EventDetail.astro";
+import { allEvents } from "../../../lib/events";
+import { pagePath } from "../../../lib/paths";
+import { pick } from "../../../lib/i18n";
+
+export async function getStaticPaths() {
+  const events = await allEvents();
+  return events.map((event) => ({ params: { slug: event.data.slug }, props: { event } }));
+}
+const { event } = Astro.props;
+const title = pick("es", event.data.title_en, event.data.title_es);
+---
+<Base lang="es" title={title} currentPath={pagePath("es", `events/${event.data.slug}`)}>
+  <EventDetail lang="es" event={event} />
+</Base>

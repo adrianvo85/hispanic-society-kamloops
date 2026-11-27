@@ -1,0 +1,35 @@
+---
+import ContactForm from "./ContactForm.astro";
+import { t, pick, splitBody } from "../lib/i18n";
+import type { Lang } from "../lib/paths";
+import { getCollection } from "astro:content";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const copy = t(lang);
+const roles = (await getCollection("volunteerRoles")).sort((a,b) => a.data.order - b.data.order);
+---
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">{copy.volunteer.eyebrow}</p>
+    <h1>{copy.volunteer.title}</h1>
+    <p class="lede">{copy.volunteer.body}</p>
+  </div>
+</section>
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="grid-cards">
+      {roles.map((r) => (
+        <article class="card">
+          <div class="card-body">
+            {r.data.placeholder && <span class="badge-example">{copy.volunteer.exampleBadge}</span>}
+            <h3>{pick(lang, r.data.title_en, r.data.title_es)}</h3>
+            <p style="white-space:pre-wrap">{splitBody(r.body || "", lang)}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div style="margin-top:3.5rem">
+      <ContactForm lang={lang} kind="volunteer" roles={roles.map((r) => ({ value: r.data.slug, label: pick(lang, r.data.title_en, r.data.title_es) }))} />
+    </div>
+  </div>
+</section>

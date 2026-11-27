@@ -1,0 +1,19 @@
+{
+  "name": "hispanic-society-kamloops",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Official website of the Hispanic Society of Kamloops / Sociedad Hispana de Kamloops. Built and donated by tresD.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "sync:facebook": "node scripts/sync-facebook.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.15.4",
+    "gsap": "^3.13.0",
+    "lenis": "^1.3.15",
+    "three": "^0.180.0"
+  }
+}

@@ -1,0 +1,36 @@
+---
+import { t } from "../lib/i18n";
+import { pagePath, withBase, withLang, type Lang } from "../lib/paths";
+interface Props { lang: Lang; currentPath: string; }
+const { lang, currentPath } = Astro.props;
+const copy = t(lang);
+const links = [
+  { href: pagePath(lang, "events"), label: copy.nav.events },
+  { href: pagePath(lang, "donate"), label: copy.nav.donate },
+  { href: pagePath(lang, "volunteer"), label: copy.nav.volunteer },
+  { href: pagePath(lang, "sponsors"), label: copy.nav.sponsors },
+  { href: pagePath(lang, "board"), label: copy.nav.board },
+  { href: pagePath(lang, "about"), label: copy.nav.about },
+  { href: pagePath(lang, "contact"), label: copy.nav.contact },
+];
+---
+<header class="nav" data-nav>
+  <a class="nav-brand" href={pagePath(lang)}>
+    <img src={withBase("/images/logos/emblem.png")} alt="" width="36" height="34" />
+    <span>{lang === "es" ? copy.siteTitleEs : copy.siteTitle}</span>
+  </a>
+  <nav>
+    <ul class="nav-links">
+      {links.map((l) => (
+        <li><a href={l.href}>{l.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+  <div class="nav-cta">
+    <div class="lang-toggle" aria-label="Language">
+      <a href={withLang("en", currentPath)} aria-current={lang === "en" ? "true" : undefined}>EN</a>
+      <a href={withLang("es", currentPath)} aria-current={lang === "es" ? "true" : undefined}>ES</a>
+    </div>
+    <a class="btn btn-primary" href={pagePath(lang, "donate")}>{copy.donate.sticky}</a>
+  </div>
+</header>

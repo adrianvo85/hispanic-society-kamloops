@@ -1,0 +1,28 @@
+---
+import { t } from "../lib/i18n";
+import { type Lang } from "../lib/paths";
+import settings from "../content/site/settings.json";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const copy = t(lang);
+---
+<section class="page-hero section-dark" style="margin-top:0">
+  <div class="wrap">
+    <p class="eyebrow">{copy.donate.eyebrow}</p>
+    <h1>{copy.donate.title}</h1>
+    <p class="lede">{copy.donate.body}</p>
+    <div class="amounts">
+      {copy.donate.amounts.map((n) => (
+        <a class="amount" href={settings.zeffyDonateUrl || `mailto:${settings.email}?subject=Donation%20$${n}`}>
+          <strong>${n}</strong><span>CAD</span>
+        </a>
+      ))}
+    </div>
+    {settings.zeffyDonateUrl ? (
+      <a class="btn btn-primary" href={settings.zeffyDonateUrl} rel="noopener">{copy.donate.cta}</a>
+    ) : (
+      <p class="note" style="color:rgba(255,255,255,0.8)">{copy.donate.pending} <a href={`mailto:${settings.email}`}>{settings.email}</a></p>
+    )}
+    <p class="lede" style="margin-top:1.4rem">{copy.donate.invoiceNote}</p>
+  </div>
+</section>

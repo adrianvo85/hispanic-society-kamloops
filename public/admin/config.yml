@@ -1,0 +1,184 @@
+# Decap CMS — optional editor at /admin/
+# For a working login, create a free GitHub OAuth App and a small OAuth proxy,
+# or use Pages CMS instead (see docs/guia-actualizar.md).
+locale: en
+display_url: https://adrianvo85.github.io/hispanic-society-kamloops/
+logo_url: /hispanic-society-kamloops/images/logos/hsk-circular.png
+
+backend:
+  name: github
+  repo: adrianvo85/hispanic-society-kamloops
+  branch: main
+  # site_domain and base_url can be completed when an OAuth proxy is available.
+
+media_folder: public/uploads
+public_folder: /uploads
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: settings
+    label: Site settings
+    files:
+      - name: settings
+        label: Contact, social and donation links
+        file: src/content/site/settings.json
+        fields:
+          - { name: email, label: Public email, widget: string }
+          - { name: facebookUrl, label: Facebook URL, widget: string }
+          - { name: instagramUrl, label: Instagram URL, widget: string }
+          - { name: instagramHandle, label: Instagram handle, widget: string }
+          - { name: zeffyDonateUrl, label: "Zeffy donation URL (leave blank until it exists)", widget: string, required: false }
+          - { name: formspreeVolunteer, label: Formspree volunteer form URL, widget: string }
+          - { name: formspreeSponsor, label: Formspree sponsor form URL, widget: string }
+          - { name: googleFormVolunteer, label: Google Form volunteer URL (optional), widget: string, required: false }
+          - { name: googleFormSponsor, label: Google Form sponsor URL (optional), widget: string, required: false }
+          - { name: craRegisteredCharity, label: CRA registered charity? (keep off until confirmed), widget: boolean }
+  - name: events
+    label: Events
+    label_singular: Event
+    folder: src/content/events
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug (URL), widget: string }
+      - { name: status, label: Status, widget: select, options: ["upcoming", "past", "draft"] }
+      - { name: placeholder, label: Mark as placeholder / unconfirmed, widget: boolean, default: false }
+      - { name: title_en, label: Title (English), widget: string }
+      - { name: title_es, label: Title (Spanish), widget: string }
+      - { name: subtitle_en, label: Subtitle (English), widget: string, required: false }
+      - { name: subtitle_es, label: Subtitle (Spanish), widget: string, required: false }
+      - { name: date, label: Date, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - { name: startTime, label: Start time (HH:MM, 24h, Vancouver), widget: string, required: false }
+      - { name: endTime, label: End time (HH:MM), widget: string, required: false }
+      - { name: timezone, label: Timezone, widget: string, default: America/Vancouver }
+      - { name: venue, label: Venue, widget: string, required: false }
+      - { name: address, label: Address, widget: string, required: false }
+      - { name: ticketsUrl, label: Zeffy or partner ticket URL, widget: string, required: false }
+      - { name: ticketsStatus, label: Ticket status, widget: select, options: ["open", "closed", "free", "partner", "none"], default: "none" }
+      - { name: priceFrom, label: Price from (number, no $), widget: number, required: false }
+      - { name: currency, label: Currency, widget: string, default: CAD }
+      - { name: age_en, label: Age note (English), widget: string, required: false }
+      - { name: age_es, label: Age note (Spanish), widget: string, required: false }
+      - { name: hero, label: Hero image, widget: image, required: false }
+      - { name: featured, label: Featured on the home page, widget: boolean, default: false }
+      - name: gallery
+        label: Gallery
+        widget: list
+        required: false
+        fields:
+          - { name: src, label: Image, widget: image }
+          - { name: alt_en, label: Alt text (English), widget: string, required: false }
+          - { name: alt_es, label: Alt text (Spanish), widget: string, required: false }
+          - { name: credit, label: Credit, widget: string, required: false }
+      - { name: dateNote_en, label: Date caveat (English), widget: text, required: false }
+      - { name: dateNote_es, label: Date caveat (Spanish), widget: text, required: false }
+      - { name: body, label: Description (English, then <!-- ES --> and Spanish), widget: markdown }
+  - name: board
+    label: Board of directors
+    folder: src/content/board
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug, widget: string }
+      - { name: placeholder, label: Placeholder (no public name yet), widget: boolean, default: true }
+      - { name: permissionToPublish, label: Person has given permission to publish name/photo, widget: boolean, default: false }
+      - { name: name_en, label: Name (English), widget: string }
+      - { name: name_es, label: Name (Spanish), widget: string }
+      - { name: role_en, label: Role (English), widget: string, required: false }
+      - { name: role_es, label: Role (Spanish), widget: string, required: false }
+      - { name: photo, label: Photo (only if permission is given), widget: image, required: false }
+      - { name: order, label: Order, widget: number }
+      - { name: body, label: Notes, widget: markdown, required: false }
+  - name: resolutions
+    label: Resolutions and minutes
+    folder: src/content/resolutions
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug, widget: string }
+      - { name: placeholder, label: Placeholder, widget: boolean, default: false }
+      - { name: example, label: "Mark as EXAMPLE (not a real record)", widget: boolean, default: false }
+      - { name: title_en, label: Title (English), widget: string }
+      - { name: title_es, label: Title (Spanish), widget: string }
+      - { name: date, label: Date, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - { name: kind, label: Kind, widget: select, options: ["minutes", "resolution", "other"] }
+      - { name: pdf, label: PDF file, widget: file, required: false }
+      - { name: body, label: Summary, widget: markdown, required: false }
+  - name: sponsors
+    label: Current sponsors
+    folder: src/content/sponsors
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug, widget: string }
+      - { name: name, label: Name, widget: string }
+      - { name: tier, label: Tier id (friend, bronze, silver, gold, title, event, in-kind), widget: string }
+      - { name: tierLabel_en, label: Tier label (English), widget: string, required: false }
+      - { name: tierLabel_es, label: Tier label (Spanish), widget: string, required: false }
+      - { name: logo, label: Logo, widget: image, required: false }
+      - { name: url, label: Website, widget: string, required: false }
+      - { name: year, label: Year, widget: number, required: false }
+      - { name: body, label: Notes, widget: markdown, required: false }
+  - name: volunteerRoles
+    label: Volunteer roles
+    folder: src/content/volunteer-roles
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug, widget: string }
+      - { name: placeholder, label: Example role (not yet confirmed), widget: boolean, default: true }
+      - { name: title_en, label: Title (English), widget: string }
+      - { name: title_es, label: Title (Spanish), widget: string }
+      - { name: order, label: Order, widget: number }
+      - { name: body, label: Description (English, then <!-- ES --> and Spanish), widget: markdown }
+  - name: partners
+    label: Community partners
+    folder: src/content/partners
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - { name: slug, label: Slug, widget: string }
+      - { name: name_en, label: Name (English), widget: string }
+      - { name: name_es, label: Name (Spanish), widget: string }
+      - { name: url, label: Website, widget: string }
+      - { name: order, label: Order, widget: number }
+      - { name: body, label: Description (English, then <!-- ES --> and Spanish), widget: markdown }
+  - name: sponsorship
+    label: Sponsorship program
+    files:
+      - name: program
+        label: Tiers and rules
+        file: src/content/site/sponsorship.json
+        fields:
+          - { name: currency, label: Currency, widget: string }
+          - { name: termMonths, label: Term (months), widget: number }
+          - { name: perEventFrom, label: Per-event from ($), widget: number }
+          - { name: inKind, label: Allow in-kind, widget: boolean }
+          - name: annualTiers
+            label: Annual tiers
+            widget: list
+            fields:
+              - { name: id, label: id, widget: string }
+              - { name: name_en, label: Name EN, widget: string }
+              - { name: name_es, label: Name ES, widget: string }
+              - { name: amount, label: Amount, widget: number }
+              - { name: exclusive, label: Exclusive, widget: boolean }
+              - { name: perks_en, label: Perks EN, widget: list, field: { name: perk, widget: string } }
+              - { name: perks_es, label: Perks ES, widget: list, field: { name: perk, widget: string } }
+          - { name: rules_en, label: Rules EN, widget: list, field: { name: rule, widget: string } }
+          - { name: rules_es, label: Rules ES, widget: list, field: { name: rule, widget: string } }

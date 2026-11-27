@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { t, pick } from "../lib/i18n";
+import type { Lang } from "../lib/paths";
+import { googleCalendarUrl, icsContent } from "../lib/dates";
+
+interface Props { lang: Lang; event: CollectionEntry<"events">; }
+const { lang, event } = Astro.props;
+const d = event.data;
+const copy = t(lang);
+const title = pick(lang, d.title_en, d.title_es);
+const loc = [d.venue, d.address].filter(Boolean).join(", ");
+const gUrl = googleCalendarUrl({
+  title,
+  date: d.date,
+  startTime: d.startTime,
+  endTime: d.endTime,
+  details: `${title}\n${d.ticketsUrl || ""}`,
+  location: loc,
+});
+const ics = icsContent({
+  title,
+  date: d.date,
+  startTime: d.startTime,
+  endTime: d.endTime,
+  details: title,
+  location: loc,
+  url: d.ticketsUrl,
+});
+const icsHref = `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
+---
+<div class="card-actions">
+  <span class="muted-sm">{copy.upcoming.addToCal}:</span>
+  <a class="chip" href={gUrl} rel="noopener" target="_blank">{copy.upcoming.googleCal}</a>
+  <a class="chip" href={icsHref} download={`${d.slug}.ics`}>{copy.upcoming.ics}</a>
+</div>

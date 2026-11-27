@@ -1,0 +1,42 @@
+---
+import { t, pick, splitBody } from "../lib/i18n";
+import type { Lang } from "../lib/paths";
+import { getCollection } from "astro:content";
+import { formatDate } from "../lib/dates";
+import settings from "../content/site/settings.json";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const copy = t(lang);
+const partners = (await getCollection("partners")).sort((a,b) => a.data.order - b.data.order);
+---
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">{copy.about.eyebrow}</p>
+    <h1>{copy.about.title}</h1>
+  </div>
+</section>
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <p class="lede" style="font-size:1.2rem">{lang === "es" ? settings.chlavmDescriptionEs : settings.chlavmDescriptionEn}</p>
+    <p class="note">{copy.about.directoryNote} <a href={settings.chlavmUrl} rel="noopener">CHLAVM</a>.</p>
+    <p class="lede" style="margin-top:1.4rem">{copy.about.history}</p>
+
+    <dl style="display:grid;grid-template-columns:16rem 1fr;gap:0.7rem 1rem;margin-top:2.2rem;max-width:46rem">
+      <dt><strong>{copy.about.legal}</strong></dt><dd>{settings.legalName}</dd>
+      <dt><strong>{copy.about.alsoKnown}</strong></dt><dd>{settings.publicNameEs}</dd>
+      <dt><strong>{copy.about.societyNo}</strong></dt><dd><a href={settings.orgbookUrl}>{settings.societyNumber}</a></dd>
+      <dt><strong>{copy.about.registered}</strong></dt><dd>{formatDate(settings.registered, lang, { weekday: undefined })}</dd>
+      <dt><strong>{copy.about.renamed}</strong></dt><dd>{formatDate(settings.renamed, lang, { weekday: undefined })}</dd>
+    </dl>
+
+    <h2 style="margin-top:4rem">{copy.about.partners}</h2>
+    <div class="partners" style="margin-top:1.2rem">
+      {partners.map((p) => (
+        <a class="partner" href={p.data.url} rel="noopener">
+          <h3>{pick(lang, p.data.name_en, p.data.name_es)}</h3>
+          <p>{splitBody(p.body || "", lang)}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

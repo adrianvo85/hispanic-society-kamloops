@@ -1,0 +1,92 @@
+---
+import type { CollectionEntry } from "astro:content";
+import CalendarLinks from "./CalendarLinks.astro";
+import { t, pick, splitBody } from "../lib/i18n";
+import { pagePath, withBase, type Lang } from "../lib/paths";
+import { formatDate, formatTime } from "../lib/dates";
+
+interface Props { lang: Lang; event: CollectionEntry<"events">; }
+const { lang, event } = Astro.props;
+const d = event.data;
+const copy = t(lang);
+const title = pick(lang, d.title_en, d.title_es);
+const sub = pick(lang, d.subtitle_en, d.subtitle_es);
+const body = splitBody(event.body || "", lang);
+const dateLabel = formatDate(d.date, lang);
+const timeLabel = [d.startTime && formatTime(d.startTime, lang), d.endTime && formatTime(d.endTime, lang)].filter(Boolean).join(" – ");
+const note = pick(lang, d.dateNote_en || "", d.dateNote_es || "");
+const gallery = d.gallery || [];
+const ticketLabel =
+  d.ticketsStatus === "free" ? copy.upcoming.free :
+  d.ticketsStatus === "closed" ? copy.upcoming.ticketsClosed :
+  d.ticketsStatus === "partner" ? copy.upcoming.partner :
+  copy.upcoming.tickets;
+---
+<article>
+  <header class="event-hero">
+    {d.hero && !d.heroIsPlaceholder && <img class="bg" src={withBase(d.hero)} alt="" />}
+    <div class="shade"></div>
+    <div class="copy">
+      <p class="eyebrow"><a href={pagePath(lang, "events")} style="color:#fff;text-decoration:none">{copy.event.back}</a></p>
+      <p class="card-date" style="color:var(--yellow)">{dateLabel}{timeLabel ? ` · ${timeLabel}` : ""}</p>
+      <h1>{title}</h1>
+      {sub && <p class="hero-lede">{sub}</p>}
+      <div class="card-actions" style="margin-top:1.2rem">
+        {d.ticketsUrl && <a class="btn btn-primary" href={d.ticketsUrl} rel="noopener">{ticketLabel}</a>}
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap">
+      <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:2.5rem">
+        <div>
+          <h2>{copy.event.details}</h2>
+          <div class="lede" style="margin-top:1rem;white-space:pre-wrap">{body}</div>
+          {note && <p class="note">{copy.upcoming.notePrefix}: {note}</p>}
+          <div style="margin-top:1.4rem"><CalendarLinks lang={lang} event={event} /></div>
+        </div>
+        <aside>
+          <p class="eyebrow">{copy.event.when}</p>
+          <p><strong>{dateLabel}</strong></p>
+          {timeLabel && <p>{timeLabel} (America/Vancouver)</p>}
+          <p class="eyebrow" style="margin-top:1.2rem">{copy.event.venue}</p>
+          <p><strong>{d.venue}</strong></p>
+          <p class="lede">{d.address}</p>
+          {typeof d.priceFrom === "number" && (
+            <p style="margin-top:1rem">{d.ticketsStatus === "free" ? copy.upcoming.free : `${copy.upcoming.from} $${d.priceFrom} ${d.currency}`}</p>
+          )}
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap-wide">
+      <h2>{copy.event.gallery}</h2>
+      {gallery.length === 0 ? (
+        <p class="empty-state" style="margin-top:1rem">{copy.event.noGallery}</p>
+      ) : (
+        <div class="gallery-stage" style="margin-top:1.2rem">
+          {gallery.map((g, i) => (
+            <figure>
+              <button class="gallery-frame" data-lightbox={withBase(g.src)} aria-label={copy.event.fullscreen}>
+                <img src={withBase(g.src)} alt={pick(lang, g.alt_en || title, g.alt_es || title)} loading={i === 0 ? "eager" : "lazy"} />
+              </button>
+              {g.credit && <figcaption class="credit">{g.credit}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</article>
+<div class="lightbox" data-lightbox-layer>
+  <button type="button" data-lightbox-close>{copy.event.close}</button>
+  <img alt="" />
+</div>
+<style>
+  @media (max-width: 900px) {
+    article section .wrap > div { grid-template-columns: 1fr !important; }
+  }
+</style>

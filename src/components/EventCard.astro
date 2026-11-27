@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { t, pick } from "../lib/i18n";
+import { pagePath, withBase, type Lang } from "../lib/paths";
+import { formatDate, formatTime } from "../lib/dates";
+
+interface Props {
+  lang: Lang;
+  event: CollectionEntry<"events">;
+}
+const { lang, event } = Astro.props;
+const d = event.data;
+const copy = t(lang);
+const title = pick(lang, d.title_en, d.title_es);
+const sub = pick(lang, d.subtitle_en, d.subtitle_es);
+const href = pagePath(lang, `events/${d.slug}`);
+const dateLabel = formatDate(d.date, lang);
+const timeLabel = d.startTime ? formatTime(d.startTime, lang) : "";
+const ticketLabel =
+  d.ticketsStatus === "free" ? copy.upcoming.free :
+  d.ticketsStatus === "closed" ? copy.upcoming.ticketsClosed :
+  d.ticketsStatus === "partner" ? copy.upcoming.partner :
+  d.ticketsUrl ? copy.upcoming.tickets : "";
+---
+<article class="card reveal">
+  <a href={href} class="card-media" aria-hidden={!d.hero}>
+    {d.hero && !d.heroIsPlaceholder ? (
+      <img src={withBase(d.hero)} alt="" loading="lazy" />
+    ) : (
+      <div style="width:100%;height:100%;"></div>
+    )}
+  </a>
+  <div class="card-body">
+    <p class="card-date">{dateLabel}{timeLabel ? ` · ${timeLabel}` : ""}</p>
+    <h3><a href={href} style="text-decoration:none">{title}</a></h3>
+    {sub && <p>{sub}</p>}
+    {d.venue && <p>{d.venue}</p>}
+    {typeof d.priceFrom === "number" && d.ticketsStatus !== "free" && (
+      <p>{copy.upcoming.from} ${d.priceFrom} {d.currency}</p>
+    )}
+    <div class="card-actions">
+      <a class="btn btn-ghost" href={href} style="padding:0.45rem 0.8rem">{copy.common.open}</a>
+      {d.ticketsUrl && ticketLabel && (
+        <a class="btn btn-dark" href={d.ticketsUrl} style="padding:0.45rem 0.8rem" rel="noopener">{ticketLabel}</a>
+      )}
+    </div>
+  </div>
+</article>
