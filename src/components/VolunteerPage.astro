@@ -1,35 +1,105 @@
 ---
 import ContactForm from "./ContactForm.astro";
 import { t, pick, splitBody } from "../lib/i18n";
-import type { Lang } from "../lib/paths";
+import { withBase, type Lang } from "../lib/paths";
 import { getCollection } from "astro:content";
+import settings from "../content/site/settings.json";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const copy = t(lang);
 const roles = (await getCollection("volunteerRoles")).sort((a,b) => a.data.order - b.data.order);
+const jobs = (await getCollection("eventJobs")).sort((a,b) => a.data.order - b.data.order);
+const benefits = [
+  { title: copy.volunteer.benefit1Title, body: copy.volunteer.benefit1Body },
+  { title: copy.volunteer.benefit2Title, body: copy.volunteer.benefit2Body },
+  { title: copy.volunteer.benefit3Title, body: copy.volunteer.benefit3Body },
+  { title: copy.volunteer.benefit4Title, body: copy.volunteer.benefit4Body },
+];
 ---
-<section class="page-hero">
+<section class="page-hero" style={`background-image:linear-gradient(180deg,rgba(7,9,13,0.45),rgba(7,9,13,0.88)),url('${withBase("/images/stock/papel-picado.jpg")}');background-size:cover;background-position:center`}>
   <div class="wrap">
     <p class="eyebrow">{copy.volunteer.eyebrow}</p>
     <h1>{copy.volunteer.title}</h1>
     <p class="lede">{copy.volunteer.body}</p>
+    <p style="margin-top:2rem">
+      <a class="btn btn-solid" href="#volunteer-signup">{copy.volunteer.cta}</a>
+    </p>
   </div>
 </section>
-<section class="section" style="padding-top:0">
+
+<section class="section talavera">
   <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">{copy.volunteer.benefitsEyebrow}</p>
+      <h2>{copy.volunteer.benefitsTitle}</h2>
+    </div>
+    <div class="benefits">
+      {benefits.map((b) => (
+        <article class="benefit">
+          <h3>{b.title}</h3>
+          <p>{b.body}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="section-head">
+      <p class="eyebrow">{copy.volunteer.rolesEyebrow}</p>
+      <h2>{copy.volunteer.rolesTitle}</h2>
+    </div>
     <div class="grid-cards">
       {roles.map((r) => (
-        <article class="card">
+        <article class="card role-card">
           <div class="card-body">
             {r.data.placeholder && <span class="badge-example">{copy.volunteer.exampleBadge}</span>}
+            <div class="role-icon" aria-hidden="true"></div>
             <h3>{pick(lang, r.data.title_en, r.data.title_es)}</h3>
             <p style="white-space:pre-wrap">{splitBody(r.body || "", lang)}</p>
           </div>
         </article>
       ))}
     </div>
-    <div style="margin-top:3.5rem">
-      <ContactForm lang={lang} kind="volunteer" roles={roles.map((r) => ({ value: r.data.slug, label: pick(lang, r.data.title_en, r.data.title_es) }))} />
+    <p style="margin-top:2.4rem">
+      <a class="btn btn-dark" href="#volunteer-signup">{copy.volunteer.cta}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section section-alt" id="event-jobs">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">{copy.jobs.eyebrow}</p>
+      <h2>{copy.jobs.title}</h2>
+      <p class="lede">{copy.jobs.body}</p>
     </div>
+    <div class="grid-cards">
+      {jobs.map((j) => {
+        const title = pick(lang, j.data.title_en, j.data.title_es);
+        const subject = `Application: ${j.data.title_en} — Hispanic Society of Kamloops`;
+        const mailto = `mailto:${settings.email}?subject=${encodeURIComponent(subject)}`;
+        return (
+          <article class="job-card">
+            {j.data.example && <span class="badge-example">{copy.jobs.exampleBadge}</span>}
+            <h3>{title}</h3>
+            <p class="job-meta">{pick(lang, j.data.event_en, j.data.event_es)}</p>
+            {j.data.date && <p class="job-meta">{j.data.date}</p>}
+            <p class="job-pay">{pick(lang, j.data.pay_en, j.data.pay_es)}</p>
+            <p style="white-space:pre-wrap;margin:0 0 1.2rem">{splitBody(j.body || "", lang)}</p>
+            <p style="margin-top:auto">
+              <a class="btn btn-dark" href={mailto}>{copy.jobs.apply}</a>
+            </p>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="volunteer-signup">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">{copy.volunteer.formTitle}</p>
+      <h2>{copy.volunteer.cta}</h2>
+    </div>
+    <ContactForm lang={lang} kind="volunteer" roles={roles.map((r) => ({ value: r.data.slug, label: pick(lang, r.data.title_en, r.data.title_es) }))} />
   </div>
 </section>

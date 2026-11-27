@@ -1,0 +1,20 @@
+---
+import { withBase } from "../lib/paths";
+interface Props {
+  alt: string;
+  class?: string;
+  width?: number;
+  height?: number;
+}
+const { alt, width = 512, height = 512 } = Astro.props;
+const cls = Astro.props.class || "";
+---
+<picture class={cls}>
+  <source type="image/webp" srcset={withBase("/images/logos/logo-official-512.webp")} />
+  <img
+    src={withBase("/images/logos/logo-official-512.png")}
+    width={width}
+    height={height}
+    alt={alt}
+  />
+</picture>
