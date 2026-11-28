@@ -18,12 +18,13 @@ priceFrom: 0
 currency: CAD
 age_en: All ages
 age_es: Todas las edades
-hero: /images/events/dia-de-los-muertos-2026.webp
+hero: /images/gallery/dia-de-los-muertos-2026.webp
 gallery:
-  - src: /images/events/dia-de-los-muertos-2026.webp
-    alt_en: Museum poster for the 31 October 2026 Día de los Muertos celebration
-    alt_es: Afiche del museo para la celebración del Día de los Muertos del 31 de octubre de 2026
-    credit: Kamloops Museum and Archives
+  - src: /images/gallery/dia-de-los-muertos-2026.webp
+    alt_en: Poster for the Día de los Muertos celebration at Kamloops Museum and Archives, 31 October 2026, 10:00 a.m. to 1:00 p.m. All ages, free.
+    alt_es: Afiche de la celebración del Día de los Muertos en el Kamloops Museum and Archives, 31 de octubre de 2026, de 10:00 a.m. a 1:00 p.m. Todas las edades, entrada libre.
+    credit: Kamloops Museum and Archives, in partnership with the Hispanic Society of Kamloops
+
 featured: true
 source: museum
 ---
