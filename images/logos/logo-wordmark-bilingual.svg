@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 160" role="img" aria-label="Sociedad Hispana de Kamloops / Hispanic Society of Kamloops">
+  <title>Proposed bilingual wordmark, pending Society approval</title>
+  
+  <!-- Proposed recreation of the mountain emblem from the Society's public bilingual wordmark. -->
+  <g transform="translate(60,60)">
+    <!-- river -->
+    <path d="M-8,18 C-2,10 2,14 6,6 C10,-2 14,2 22,8 C18,16 10,22 0,26 C-10,22 -14,16 -8,18Z" fill="#17A8B8"/>
+    <!-- mountain -->
+    <path d="M-26,10 L-6,-22 L8,-8 L16,-18 L34,10 L18,16 L-16,16 Z" fill="#6A6E73"/>
+    <path d="M-6,-22 L2,-8 L8,-8 L-2,-18 Z" fill="#E8EEF2"/>
+    <path d="M16,-18 L22,-6 L28,0 L16,-8 Z" fill="#D5DCE2"/>
+    <!-- people / ribbons around -->
+    <path d="M-8,-36 C-22,-28 -32,-10 -28,8 C-24,-8 -10,-22 2,-28 C-2,-34 -4,-36 -8,-36Z" fill="#E8B22A"/>
+    <circle cx="-10" cy="-38" r="7" fill="#E8B22A"/>
+    <path d="M10,-34 C22,-36 38,-22 40,-6 C28,-18 16,-24 4,-22 C6,-30 8,-34 10,-34Z" fill="#E00078"/>
+    <circle cx="18" cy="-38" r="7" fill="#E00078"/>
+    <path d="M36,-2 C46,8 46,28 34,40 C40,22 30,8 18,4 C28,-2 34,-4 36,-2Z" fill="#2A3F8F"/>
+    <circle cx="42" cy="6" r="7" fill="#2A3F8F"/>
+    <path d="M-30,10 C-40,24 -34,42 -18,48 C-30,32 -26,18 -14,12 C-22,10 -28,10 -30,10Z" fill="#2FAE5C"/>
+    <circle cx="-32" cy="22" r="7" fill="#2FAE5C"/>
+  </g>
+
+  <g fill="currentColor" font-family="Inter, Arial, Helvetica, sans-serif">
+    <text x="130" y="52" font-size="22" font-weight="700" letter-spacing="0.16em">SOCIEDAD HISPANA</text>
+    <text x="130" y="76" font-size="14" font-weight="600" letter-spacing="0.18em">DE KAMLOOPS</text>
+    <text x="130" y="110" font-size="13" font-weight="500" letter-spacing="0.12em">HISPANIC SOCIETY OF KAMLOOPS</text>
+  </g>
+</svg>
