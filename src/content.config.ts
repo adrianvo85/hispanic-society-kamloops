@@ -37,6 +37,7 @@ const events = defineCollection({
     source: z.string().optional().default(""),
     dateNote_en: z.string().optional().default(""),
     dateNote_es: z.string().optional().default(""),
+    rsvpSubject: z.string().optional().default(""),
   }),
 });
 
@@ -49,6 +50,8 @@ const board = defineCollection({
     name_es: z.string(),
     role_en: z.string().optional().default(""),
     role_es: z.string().optional().default(""),
+    duties_en: z.string().optional().default(""),
+    duties_es: z.string().optional().default(""),
     photo: z.string().optional().default(""),
     order: z.number().default(0),
     permissionToPublish: z.boolean().default(false),
