@@ -1,7 +1,6 @@
 ---
-interface Props { light?: boolean; }
-const { light = false } = Astro.props;
-const colors = ["#E5097F", "#F5C518", "#2E9A5C", "#17A8B4", "#283E7D"];
+interface Props { light?: boolean; colors?: string[]; }
+const { light = false, colors = ["#E5097F", "#F5C518", "#2E9A5C", "#17A8B4", "#283E7D"] } = Astro.props;
 ---
 <div class:list={["papel-picado", { "is-light": light }]} aria-hidden="true">
   <svg viewBox="0 0 1200 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">

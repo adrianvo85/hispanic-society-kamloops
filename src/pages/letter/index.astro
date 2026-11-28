@@ -1,9 +1,4 @@
 ---
-import Base from "../../layouts/Base.astro";
-import View from "../../components/LetterPage.astro";
-import { pagePath } from "../../lib/paths";
-import { t } from "../../lib/i18n";
+import LetterRedirect from "../../components/LetterRedirect.astro";
 ---
-<Base lang="en" title="Letter from the President" currentPath={pagePath("en", "letter")} description={t("en").seo.letter}>
-  <View lang="en" />
-</Base>
+<LetterRedirect lang="en" />
