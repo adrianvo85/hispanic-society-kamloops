@@ -9,14 +9,14 @@ const copy = t(lang);
 const board = (await getCollection("board")).sort((a,b) => a.data.order - b.data.order);
 const resolutions = (await getCollection("resolutions")).sort((a,b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
-<section class="page-hero">
+<section class="page-hero skin-navy">
   <div class="wrap">
     <p class="eyebrow">{copy.board.eyebrow}</p>
     <h1>{copy.board.title}</h1>
     <p class="lede">{copy.board.body}</p>
   </div>
 </section>
-<section class="section" style="padding-top:0">
+<section class="section skin-cream" style="padding-top:3rem">
   <div class="wrap">
     <div class="board-grid">
       {board.map((m) => (

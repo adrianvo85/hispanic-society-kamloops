@@ -1,0 +1,151 @@
+---
+import ContactForm from "./ContactForm.astro";
+import { t, pick } from "../lib/i18n";
+import { pagePath, type Lang } from "../lib/paths";
+import { getCollection } from "astro:content";
+import settings from "../content/site/settings.json";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const copy = t(lang);
+const groups = await getCollection("dance");
+const group = groups[0];
+const styles = group?.data.styles ?? [];
+const mx = styles.filter((s) => s.region === "mx");
+const co = styles.filter((s) => s.region === "co");
+const costs = [
+  { amount: 25, text: copy.dance.cost25 },
+  { amount: 50, text: copy.dance.cost50 },
+  { amount: 100, text: copy.dance.cost100 },
+  { amount: 250, text: copy.dance.cost250 },
+  { amount: 500, text: copy.dance.cost500 },
+];
+const donateHref = settings.zeffyDonateUrl || `mailto:${settings.email}?subject=${encodeURIComponent("Donation for Alma Latina")}`;
+const whys = [
+  { t: copy.dance.why1Title, b: copy.dance.why1Body },
+  { t: copy.dance.why2Title, b: copy.dance.why2Body },
+  { t: copy.dance.why3Title, b: copy.dance.why3Body },
+  { t: copy.dance.why4Title, b: copy.dance.why4Body },
+  { t: copy.dance.why5Title, b: copy.dance.why5Body },
+];
+---
+<section class="page-hero skin-navy">
+  <div class="wrap">
+    <p class="eyebrow">{copy.dance.eyebrow}</p>
+    <h1>{copy.dance.title}</h1>
+    <p class="lede">{copy.dance.intro}</p>
+    <p class="note" style="color:var(--muted)">{copy.dance.formerly}</p>
+    <p style="margin-top:2rem;display:flex;flex-wrap:wrap;gap:0.8rem">
+      <a class="btn btn-solid" href="#join">{copy.dance.joinCta}</a>
+      <a class="btn btn-primary" href="#hire">{copy.dance.hireCta}</a>
+      <a class="btn btn-primary" href="#support">{copy.dance.supportCta}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section skin-cream">
+  <div class="wrap">
+    <h2>{copy.dance.whoTitle}</h2>
+    <p class="lede">{copy.dance.whoBody}</p>
+    <h2 style="margin-top:3.2rem">{copy.dance.doTitle}</h2>
+    <ul class="rules">
+      <li>{copy.dance.do1}</li>
+      <li>{copy.dance.do2}</li>
+      <li>{copy.dance.do3}</li>
+      <li>{copy.dance.do4}</li>
+    </ul>
+    <h2 style="margin-top:3.2rem">{copy.dance.impactTitle}</h2>
+    <p class="lede">{copy.dance.impactBody}</p>
+    <div class="panel" style="margin-top:2rem;border-top:6px solid var(--yellow)">
+      <h3 style="margin:0 0 0.6rem">{copy.dance.payTitle}</h3>
+      <p>{copy.dance.payBody}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section skin-cream" style="background:var(--paper-2)">
+  <div class="wrap">
+    <h2>{copy.dance.stylesTitle}</h2>
+    <h3 style="margin-top:2rem">{copy.dance.mxTitle}</h3>
+    <div class="style-grid">
+      {mx.map((s) => (
+        <article class:list={["style-card", { "is-proposed": !s.confirmed }]}>
+          {!s.confirmed && <span class="coming-soon">{copy.dance.stylesProposed}</span>}
+          {s.confirmed && <span class="badge-example">{copy.dance.stylesConfirmed}</span>}
+          <h3>{pick(lang, s.name_en, s.name_es)}</h3>
+          <p>{pick(lang, s.desc_en, s.desc_es)}</p>
+        </article>
+      ))}
+    </div>
+    <h3 style="margin-top:3rem">{copy.dance.coTitle}</h3>
+    <div class="style-grid">
+      {co.map((s) => (
+        <article class="style-card is-proposed">
+          <span class="coming-soon">{copy.dance.stylesProposed}</span>
+          <h3>{pick(lang, s.name_en, s.name_es)}</h3>
+          <p>{pick(lang, s.desc_en, s.desc_es)}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section skin-cream" id="support">
+  <div class="wrap">
+    <p class="eyebrow">{copy.donate.almaEyebrow}</p>
+    <h2>{copy.dance.supportTitle}</h2>
+    <p class="lede">{copy.donate.almaBody}</p>
+    <div class="amounts">
+      {costs.map((c) => (
+        <a class="amount" href={donateHref} style="max-width:22rem">
+          <strong>${c.amount}</strong>
+          <span>CAD</span>
+          <p class="muted-sm" style="margin-top:0.8rem;text-transform:none;letter-spacing:0;font-family:var(--font-sans)">{c.text}</p>
+        </a>
+      ))}
+    </div>
+    <p class="note">{copy.donate.almaNote}</p>
+    <p>{copy.donate.almaGoal}</p>
+    <p class="note">{copy.dance.costStipend}</p>
+    <p style="margin-top:1.6rem">
+      <a class="btn btn-dark" href={pagePath(lang, "donate")}>{copy.dance.supportCta}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section skin-cream" id="join" style="background:var(--paper-2)">
+  <div class="wrap">
+    <h2>{copy.dance.recruitTitle}</h2>
+    <p class="lede">{copy.dance.recruitBody}</p>
+    <div class="benefits">
+      {whys.map((w) => (
+        <article class="benefit">
+          <h3>{w.t}</h3>
+          <p>{w.b}</p>
+        </article>
+      ))}
+    </div>
+    <p>{copy.dance.seek}</p>
+    <h3 style="margin-top:2.4rem">{copy.dance.faqTitle}</h3>
+    <ul class="rules">
+      <li>{copy.dance.faqPay}</li>
+      <li>{copy.dance.faqExp}</li>
+      <li>{copy.dance.faqOrigin}</li>
+      <li>{copy.dance.faqCost}</li>
+      <li>{copy.dance.faqWhen}</li>
+      <li>{copy.dance.faqKids}</li>
+    </ul>
+    <div style="margin-top:2.4rem">
+      <ContactForm lang={lang} kind="dance" />
+    </div>
+  </div>
+</section>
+
+<section class="section skin-cream" id="hire">
+  <div class="wrap">
+    <h2>{copy.dance.hireTitle}</h2>
+    <p class="lede">{copy.dance.hireBody}</p>
+    <div style="margin-top:2rem">
+      <ContactForm lang={lang} kind="book" />
+    </div>
+  </div>
+</section>
