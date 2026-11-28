@@ -1,6 +1,6 @@
 # Hispanic Society of Kamloops
 
-Public website for the **Hispanic Society of Kamloops / Sociedad Hispana de Kamloops** (BC Society S0071166). Built and donated by [tresD](https://tresd.ca).
+Public website for the **Hispanic Society of Kamloops / Sociedad Hispana de Kamloops**. Built and donated by [tresD](https://tresd.ca).
 
 - Intended live URL (GitHub Pages): https://adrianvo85.github.io/hispanic-society-kamloops/
 - Default language: English, with a full Spanish version under `/es/`.

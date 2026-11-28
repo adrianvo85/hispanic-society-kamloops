@@ -76,6 +76,7 @@ collections:
           - { name: alt_es, label: Alt text (Spanish), widget: string, required: false }
           - { name: credit, label: Credit, widget: string, required: false }
       - { name: dateNote_en, label: Date caveat (English), widget: text, required: false }
+      - { name: rsvpSubject, label: RSVP email subject (shows I'll attend button), widget: string, required: false }
       - { name: dateNote_es, label: Date caveat (Spanish), widget: text, required: false }
       - { name: body, label: Description (English, then <!-- ES --> and Spanish), widget: markdown }
   - name: board
@@ -93,6 +94,8 @@ collections:
       - { name: name_es, label: Name (Spanish), widget: string }
       - { name: role_en, label: Role (English), widget: string, required: false }
       - { name: role_es, label: Role (Spanish), widget: string, required: false }
+      - { name: duties_en, label: Duties (English), widget: text, required: false }
+      - { name: duties_es, label: Responsabilidades (Spanish), widget: text, required: false }
       - { name: photo, label: Photo (only if permission is given), widget: image, required: false }
       - { name: order, label: Order, widget: number }
       - { name: body, label: Notes, widget: markdown, required: false }
@@ -184,19 +187,17 @@ collections:
           - { name: rules_es, label: Rules ES, widget: list, field: { name: rule, widget: string } }
 
   - name: letter
-    label: Letter from the President
+    label: Letter from the Board
     files:
       - name: letter
         label: Letter text
         file: src/content/site/letter.json
         fields:
           - { name: draft, label: Draft (show DRAFT badge), widget: boolean }
-          - { name: presidentName_en, label: "President name (EN — use [President's name — pending] until confirmed)", widget: string }
-          - { name: presidentName_es, label: Nombre de la presidencia (ES), widget: string }
-          - { name: role_en, label: Role (EN), widget: string }
-          - { name: role_es, label: Cargo (ES), widget: string }
-          - { name: date_en, label: Date (EN), widget: string }
-          - { name: date_es, label: Fecha (ES), widget: string }
+          - { name: signatory_en, label: Signatory (EN), widget: string }
+          - { name: signatory_es, label: Firma (ES), widget: string }
+          - { name: date_en, label: Date (EN), widget: string, required: false }
+          - { name: date_es, label: Fecha (ES), widget: string, required: false }
           - { name: greeting_en, label: Greeting (EN), widget: string }
           - { name: greeting_es, label: Saludo (ES), widget: string }
           - { name: body_en, label: Letter body (EN), widget: text }

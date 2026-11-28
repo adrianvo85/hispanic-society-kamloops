@@ -19,7 +19,7 @@ function restorePayloads() {
     const data = JSON.parse(readFileSync(join(payloadDir, name), "utf8"));
     for (const item of data.files || []) {
       const dest = join(root, item.path);
-      if (existsSync(dest)) continue;
+      if (existsSync(dest) && !item.overwrite) continue;
       mkdirSync(dirname(dest), { recursive: true });
       writeFileSync(dest, Buffer.from(item.base64, "base64"));
       console.log("restored", item.path);
