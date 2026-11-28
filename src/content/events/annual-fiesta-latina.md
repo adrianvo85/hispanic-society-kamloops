@@ -18,15 +18,11 @@ priceFrom: 10
 currency: CAD
 age_en: All ages
 age_es: Todas las edades
-hero: /images/events/annual-fiesta-latina.webp
+hero: /images/gallery/fiesta-latina-2025.webp
 gallery:
-  - src: /images/events/annual-fiesta-latina.webp
-    alt_en: Annual Hispanic Heritage Month Fiesta Latina poster
-    alt_es: Afiche de la Fiesta Latina anual del Mes de la Herencia Hispana
-    credit: Hispanic Society of Kamloops / Zeffy
-  - src: /images/events/annual-fiesta-latina-bottom.webp
-    alt_en: Lower portion of the Annual Fiesta Latina poster
-    alt_es: Parte inferior del afiche de la Fiesta Latina anual
+  - src: /images/gallery/fiesta-latina-2025.webp
+    alt_en: Official poster for the Annual Hispanic Heritage Month Fiesta Latina, 25 October 2025, at the DoubleTree by Hilton.
+    alt_es: Afiche oficial de la Fiesta Latina anual del Mes de la Herencia Hispana, 25 de octubre de 2025, en el DoubleTree by Hilton.
     credit: Hispanic Society of Kamloops / Zeffy
 featured: true
 source: zeffy
@@ -36,5 +32,10 @@ dateNote_es: "La fecha y el inicio a las 5:30 p.m. siguen el listado de Castanet
 
 A Hispanic Heritage Month Fiesta Latina hosted at the DoubleTree, 339 St Paul St. Zeffy ticket options included admission only ($10), admission plus tacos or nachos ($28), and admission plus flautas or wings ($26). A Castanet listing described live music and a talent show on 25 October 2025 at 5:30 p.m.
 
+Come with family, bring your appetite and your dancing shoes.
+
+
 <!-- ES -->
 Una Fiesta Latina del Mes de la Herencia Hispana en el DoubleTree, 339 St Paul St. En Zeffy hubo admisión sola ($10), admisión con tacos o nachos ($28) y admisión con flautas o alitas ($26). Un listado de Castanet describió música en vivo y talent show el 25 de octubre de 2025 a las 5:30 p.m.
+
+Ven en familia, trae hambre y ganas de bailar.
