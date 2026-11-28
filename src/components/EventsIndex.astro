@@ -8,6 +8,7 @@ const { lang } = Astro.props;
 const copy = t(lang);
 const { upcoming, past } = splitEvents(await allEvents());
 const posters = [
+  { src: "/images/gallery/agm-2026.webp", en: "Official poster for the Annual General Meeting (AGM) 2026. The listing date is Saturday, 28 November 2026, 7:30 p.m., at Kamloops Immigrant Services.", es: "Afiche oficial de la Asamblea General Anual (AGM) 2026. La fecha de la ficha es el sábado 28 de noviembre de 2026, a las 7:30 p.m., en Kamloops Immigrant Services.", credit: "Hispanic Society of Kamloops" },
   { src: "/images/gallery/rosca-de-reyes-2024.webp", en: "Rosca de Reyes, 6 January 2024 — sold out poster.", es: "Rosca de Reyes, 6 de enero de 2024 — afiche de cupo agotado.", credit: "Hispanic Society of Kamloops (former website)" },
   { src: "/images/gallery/dia-de-las-madres-2025.webp", en: "Día de las Madres 2025 poster.", es: "Afiche del Día de las Madres 2025.", credit: "Hispanic Society of Kamloops / Zeffy" },
   { src: "/images/gallery/dia-de-las-madres-grafico.webp", en: "Día de las Madres graphic from the former Society website.", es: "Gráfico del Día de las Madres del sitio anterior de la sociedad.", credit: "Hispanic Society of Kamloops (former website)" },

@@ -4,6 +4,7 @@ import CalendarLinks from "./CalendarLinks.astro";
 import { t, pick, splitBody } from "../lib/i18n";
 import { pagePath, withBase, type Lang } from "../lib/paths";
 import { formatDate, formatTime } from "../lib/dates";
+import settings from "../content/site/settings.json";
 
 interface Props { lang: Lang; event: CollectionEntry<"events">; }
 const { lang, event } = Astro.props;
@@ -21,6 +22,7 @@ const ticketLabel =
   d.ticketsStatus === "closed" ? copy.upcoming.ticketsClosed :
   d.ticketsStatus === "partner" ? copy.upcoming.partner :
   copy.upcoming.tickets;
+const rsvpHref = d.rsvpSubject ? `mailto:${settings.email}?subject=${encodeURIComponent(d.rsvpSubject)}` : "";
 ---
 <article>
   <header class="event-hero">
@@ -32,6 +34,7 @@ const ticketLabel =
       <h1>{title}</h1>
       {sub && <p class="hero-lede">{sub}</p>}
       <div class="card-actions" style="margin-top:1.2rem">
+        {rsvpHref && <a class="btn btn-donate" href={rsvpHref}>{copy.upcoming.rsvp}</a>}
         {d.ticketsUrl && <a class="btn btn-primary" href={d.ticketsUrl} rel="noopener">{ticketLabel}</a>}
       </div>
     </div>
@@ -44,6 +47,11 @@ const ticketLabel =
           <h2>{copy.event.details}</h2>
           <div class="lede" style="margin-top:1rem;white-space:pre-wrap">{body}</div>
           {note && <p class="note">{copy.upcoming.notePrefix}: {note}</p>}
+          {rsvpHref && (
+            <p style="margin-top:1.6rem">
+              <a class="btn btn-donate" href={rsvpHref}>{copy.upcoming.rsvp}</a>
+            </p>
+          )}
           <div style="margin-top:1.4rem"><CalendarLinks lang={lang} event={event} /></div>
         </div>
         <aside>

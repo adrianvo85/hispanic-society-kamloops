@@ -1,0 +1,27 @@
+---
+import { pagePath, type Lang } from "../lib/paths";
+import { t } from "../lib/i18n";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const dest = `${pagePath(lang, "board")}#letter`;
+const copy = t(lang);
+const title = copy.letter.title;
+---
+<!doctype html>
+<html lang={lang === "es" ? "es" : "en-CA"}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <link rel="canonical" href={dest} />
+  <meta http-equiv="refresh" content={`0;url=${dest}`} />
+  <script is:inline define:vars={{ dest }}>
+    location.replace(dest);
+  </script>
+</head>
+<body>
+  <p style="font-family:system-ui,sans-serif;padding:2rem">
+    <a href={dest}>{lang === "es" ? "Continuar a la carta en la página de la Mesa Directiva" : "Continue to the letter on the Board page"}</a>
+  </p>
+</body>
+</html>
