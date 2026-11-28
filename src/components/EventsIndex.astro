@@ -1,20 +1,31 @@
 ---
 import EventCard from "./EventCard.astro";
 import { t } from "../lib/i18n";
-import type { Lang } from "../lib/paths";
+import { withBase, type Lang } from "../lib/paths";
 import { allEvents, splitEvents } from "../lib/events";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const copy = t(lang);
 const { upcoming, past } = splitEvents(await allEvents());
+const posters = [
+  { src: "/images/gallery/rosca-de-reyes-2024.webp", en: "Rosca de Reyes, 6 January 2024 — sold out poster.", es: "Rosca de Reyes, 6 de enero de 2024 — afiche de cupo agotado.", credit: "Hispanic Society of Kamloops (former website)" },
+  { src: "/images/gallery/dia-de-las-madres-2025.webp", en: "Día de las Madres 2025 poster.", es: "Afiche del Día de las Madres 2025.", credit: "Hispanic Society of Kamloops / Zeffy" },
+  { src: "/images/gallery/dia-de-las-madres-grafico.webp", en: "Día de las Madres graphic from the former Society website.", es: "Gráfico del Día de las Madres del sitio anterior de la sociedad.", credit: "Hispanic Society of Kamloops (former website)" },
+  { src: "/images/gallery/dia-de-las-madres-2026.webp", en: "Día de las Madres 2026 poster, 9 May.", es: "Afiche del Día de las Madres 2026, 9 de mayo.", credit: "Hispanic Society of Kamloops / Zeffy" },
+  { src: "/images/gallery/dia-del-padre-2026.webp", en: "Father's Day 2026 poster.", es: "Afiche del Día del Padre 2026.", credit: "Hispanic Society of Kamloops / Zeffy" },
+  { src: "/images/gallery/fiesta-latina-2025.webp", en: "Annual Fiesta Latina 2025 poster, 25 October, DoubleTree.", es: "Afiche de la Fiesta Latina anual 2025, 25 de octubre, DoubleTree.", credit: "Hispanic Society of Kamloops / Zeffy" },
+  { src: "/images/gallery/fiesta-latina-2026.webp", en: "Fiesta Latina 2026 poster, 24 October, O.L.P.H. Parish Centre.", es: "Afiche de Fiesta Latina 2026, 24 de octubre, O.L.P.H. Parish Centre.", credit: "Hispanic Society of Kamloops / Zeffy" },
+  { src: "/images/gallery/dia-de-los-muertos-2026.webp", en: "Día de los Muertos 2026 poster, Kamloops Museum and Archives.", es: "Afiche del Día de los Muertos 2026, Kamloops Museum and Archives.", credit: "Kamloops Museum and Archives" },
+  { src: "/images/gallery/banner-hsk.webp", en: "Hispanic Society of Kamloops banner (former website, June 2024).", es: "Pendón de la Sociedad Hispana de Kamloops (sitio anterior, junio de 2024).", credit: "Hispanic Society of Kamloops (former website)" },
+];
 ---
-<section class="page-hero">
+<section class="page-hero skin-navy">
   <div class="wrap">
     <p class="eyebrow">{copy.upcoming.eyebrow}</p>
     <h1>{copy.nav.events}</h1>
   </div>
 </section>
-<section class="section" style="padding-top:0">
+<section class="section skin-aztec">
   <div class="wrap">
     <h2>{copy.upcoming.title}</h2>
     {upcoming.length === 0 ? (
@@ -27,6 +38,18 @@ const { upcoming, past } = splitEvents(await allEvents());
     <h2 style="margin-top:4rem">{copy.upcoming.pastTitle}</h2>
     <div class="grid-cards" style="margin-top:1.5rem">
       {past.map((event) => <EventCard lang={lang} event={event} />)}
+    </div>
+    <h2 style="margin-top:4.5rem">{copy.event.gallery}</h2>
+    <p class="lede">{copy.media.realGallery}</p>
+    <div class="poster-gallery" style="margin-top:1.6rem">
+      {posters.map((g) => (
+        <figure>
+          <a href={withBase(g.src)} target="_blank" rel="noopener">
+            <img src={withBase(g.src)} alt={lang === "es" ? g.es : g.en} />
+          </a>
+          <figcaption>{lang === "es" ? g.es : g.en} — {g.credit}</figcaption>
+        </figure>
+      ))}
     </div>
   </div>
 </section>

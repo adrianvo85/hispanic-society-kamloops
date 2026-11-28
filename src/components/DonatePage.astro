@@ -1,16 +1,20 @@
 ---
 import { t } from "../lib/i18n";
-import { type Lang } from "../lib/paths";
+import { pagePath, type Lang } from "../lib/paths";
 import settings from "../content/site/settings.json";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const copy = t(lang);
 ---
-<section class="page-hero section-dark" style="margin-top:0">
+<section class="page-hero skin-navy">
   <div class="wrap">
     <p class="eyebrow">{copy.donate.eyebrow}</p>
     <h1>{copy.donate.title}</h1>
     <p class="lede">{copy.donate.body}</p>
+  </div>
+</section>
+<section class="section skin-talavera">
+  <div class="wrap">
     <div class="amounts">
       {copy.donate.amounts.map((n) => (
         <a class="amount" href={settings.zeffyDonateUrl || `mailto:${settings.email}?subject=Donation%20$${n}`}>
@@ -19,13 +23,21 @@ const copy = t(lang);
       ))}
     </div>
     {settings.zeffyDonateUrl ? (
-      <a class="btn btn-primary" href={settings.zeffyDonateUrl} rel="noopener">
-        <span class="dot" aria-hidden="true"></span>
-        {copy.donate.cta}
-      </a>
+      <a class="btn btn-dark" href={settings.zeffyDonateUrl} rel="noopener">{copy.donate.cta}</a>
     ) : (
-      <p class="note" style="color:rgba(255,255,255,0.8)">{copy.donate.pending} <a href={`mailto:${settings.email}`}>{settings.email}</a></p>
+      <p class="note">{copy.donate.pending} <a href={`mailto:${settings.email}`}>{settings.email}</a></p>
     )}
-    <p class="lede" style="margin-top:1.4rem">{copy.donate.invoiceNote}</p>
+    <p class="note" style="margin-top:1.4rem">{copy.donate.invoiceNote}</p>
+
+    <div class="panel" style="margin-top:3.2rem">
+      <p class="eyebrow">{copy.donate.almaEyebrow}</p>
+      <h2 style="max-width:20ch">{copy.donate.almaTitle}</h2>
+      <p>{copy.donate.almaBody}</p>
+      <p class="note">{copy.donate.almaNote}</p>
+      <p style="margin-top:0.8rem">{copy.donate.almaGoal}</p>
+      <p style="margin-top:1.6rem">
+        <a class="btn btn-dark" href={pagePath(lang, "dance") + "#support"}>{copy.donate.almaCta}</a>
+      </p>
+    </div>
   </div>
 </section>
