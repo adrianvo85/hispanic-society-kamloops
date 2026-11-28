@@ -1,0 +1,9 @@
+---
+import Base from "../../layouts/Base.astro";
+import View from "../../components/LearnPage.astro";
+import { pagePath } from "../../lib/paths";
+import { t } from "../../lib/i18n";
+---
+<Base lang="en" title="Come live the culture" currentPath={pagePath("en", "learn")} description={t("en").seo.learn}>
+  <View lang="en" />
+</Base>

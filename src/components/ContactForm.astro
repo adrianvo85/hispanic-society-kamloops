@@ -5,7 +5,7 @@ import settings from "../content/site/settings.json";
 
 interface Props {
   lang: Lang;
-  kind: "contact" | "volunteer" | "sponsor";
+  kind: "contact" | "volunteer" | "sponsor" | "dance" | "book";
   roles?: { value: string; label: string }[];
   tiers?: { value: string; label: string }[];
 }
@@ -15,17 +15,23 @@ const actionMap = {
   volunteer: settings.formspreeVolunteer,
   sponsor: settings.formspreeSponsor,
   contact: settings.formspreeVolunteer,
+  dance: settings.formspreeVolunteer,
+  book: settings.formspreeVolunteer,
 };
 const action = actionMap[kind];
 const pending = action.includes("TODO");
 const subject =
   kind === "volunteer" ? "Volunteer interest — Hispanic Society of Kamloops" :
   kind === "sponsor" ? "Sponsorship interest — Hispanic Society of Kamloops" :
+  kind === "dance" ? "I want to dance — Alma Latina" :
+  kind === "book" ? "Book Alma Latina — booking enquiry" :
   "Website message — Hispanic Society of Kamloops";
 const mailto = `mailto:${settings.email}?subject=${encodeURIComponent(subject)}`;
 const title =
   kind === "volunteer" ? copy.volunteer.formTitle :
   kind === "sponsor" ? copy.sponsorProgram.formTitle :
+  kind === "dance" ? copy.dance.formTitle :
+  kind === "book" ? copy.dance.formHireTitle :
   copy.contact.formTitle;
 const submit =
   kind === "volunteer" ? copy.volunteer.submit :
@@ -67,6 +73,28 @@ const submit =
             <option value="both">EN + ES</option>
           </select>
         </label>
+      </>
+    )}
+    {(kind === "dance" || kind === "book") && (
+      <>
+        <label>{copy.volunteer.phone}<input name="phone" /></label>
+        {kind === "dance" && (
+          <label>
+            {lang === "es" ? "Experiencia en baile" : "Dance experience"}
+            <select name="experience">
+              <option value="none">{lang === "es" ? "Ninguna" : "None"}</option>
+              <option value="some">{lang === "es" ? "Algo" : "Some"}</option>
+              <option value="a-lot">{lang === "es" ? "Mucha" : "A lot"}</option>
+            </select>
+          </label>
+        )}
+        {kind === "book" && (
+          <>
+            <label>{lang === "es" ? "Fecha del evento" : "Event date"}<input name="event-date" /></label>
+            <label>{lang === "es" ? "Lugar" : "Venue"}<input name="venue" /></label>
+            <label>{lang === "es" ? "Tipo de evento" : "Type of event"}<input name="event-type" /></label>
+          </>
+        )}
       </>
     )}
     {kind === "sponsor" && (

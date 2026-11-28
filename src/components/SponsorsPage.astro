@@ -11,23 +11,42 @@ const sponsors = await getCollection("sponsors");
 const rules = lang === "es" ? program.rules_es : program.rules_en;
 const tiers = program.annualTiers;
 ---
-<section class="page-hero">
+<section class="page-hero skin-navy">
   <div class="wrap">
     <p class="eyebrow">{copy.sponsorProgram.eyebrow}</p>
     <h1>{copy.sponsorProgram.title}</h1>
     <p class="lede">{copy.sponsorProgram.body}</p>
   </div>
 </section>
-<section class="section" style="padding-top:0">
+<section class="section skin-cream" style="padding-top:3rem">
   <div class="wrap">
     <h2>{copy.sponsors.wallTitle}</h2>
     <div class="wall" style="margin-top:1.2rem">
       {sponsors.map((s) => (
-        <a class="wall-item" href={s.data.url || "#"}>
-          {s.data.logo ? <img src={withBase(s.data.logo)} alt={s.data.name} /> : <strong>{s.data.name}</strong>}
-          <p class="muted-sm">{pick(lang, s.data.tierLabel_en, s.data.tierLabel_es) || s.data.name}</p>
+        <a class="wall-item" href={s.data.url || "#"} rel={s.data.url ? "noopener" : undefined}>
+          {s.data.logo ? <img class="sponsor-logo" src={withBase(s.data.logo)} alt="" /> : None}
+          <strong>{s.data.name}</strong>
+          <p class="muted-sm">{pick(lang, s.data.tierLabel_en, s.data.tierLabel_es)}</p>
+          {s.data.phone && <p class="muted-sm">{copy.sponsors.phone}: {s.data.phone}</p>}
         </a>
       ))}
+    </div>
+
+
+    <h2 style="margin-top:4rem">{copy.sponsorProgram.whyTitle}</h2>
+    <div class="objective-grid">
+      <article class="objective-card">
+        <h3>{copy.sponsorProgram.why1Title}</h3>
+        <p>{copy.sponsorProgram.why1Body}</p>
+      </article>
+      <article class="objective-card">
+        <h3>{copy.sponsorProgram.why2Title}</h3>
+        <p>{copy.sponsorProgram.why2Body}</p>
+      </article>
+      <article class="objective-card">
+        <h3>{copy.sponsorProgram.why3Title}</h3>
+        <p>{copy.sponsorProgram.why3Body}</p>
+      </article>
     </div>
 
     <h2 style="margin-top:4rem">{copy.sponsorProgram.compare}</h2>

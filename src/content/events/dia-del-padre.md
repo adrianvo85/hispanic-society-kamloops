@@ -18,12 +18,13 @@ priceFrom: 25
 currency: CAD
 age_en: All ages
 age_es: Todas las edades
-hero: /images/events/dia-del-padre.webp
+hero: /images/gallery/dia-del-padre-2026.webp
 gallery:
-  - src: /images/events/dia-del-padre.webp
-    alt_en: Father's Day event image
-    alt_es: Imagen del evento del Día del Padre
+  - src: /images/gallery/dia-del-padre-2026.webp
+    alt_en: Father's Day poster — a hand holding a letter board that reads Happy Father's Day.
+    alt_es: Afiche del Día del Padre — una mano sostiene un tablero que dice Happy Father's Day.
     credit: Hispanic Society of Kamloops / Zeffy
+
 featured: false
 source: zeffy
 dateNote_en: "The poster does not print a date. The Zeffy image was uploaded 30 May 2026 and sales were closed by 26 Nov 2026. 21 June 2026 was Father's Day in Canada; confirm the exact event date if needed for official records."

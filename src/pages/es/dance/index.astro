@@ -1,0 +1,9 @@
+---
+import Base from "../../../layouts/Base.astro";
+import View from "../../../components/DancePage.astro";
+import { pagePath } from "../../../lib/paths";
+import { t } from "../../../lib/i18n";
+---
+<Base lang="es" title="Baile — Alma Latina" currentPath={pagePath("es", "dance")} description={t("es").seo.dance}>
+  <View lang="es" />
+</Base>

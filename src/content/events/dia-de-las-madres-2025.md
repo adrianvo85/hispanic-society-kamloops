@@ -18,12 +18,17 @@ priceFrom: 25
 currency: CAD
 age_en: All ages
 age_es: Todas las edades
-hero: /images/events/dia-de-las-madres-2025.webp
+hero: /images/gallery/dia-de-las-madres-2025.webp
 gallery:
-  - src: /images/events/dia-de-las-madres-2025.webp
-    alt_en: Día de las Madres poster with the HSK emblem
-    alt_es: Afiche del Día de las Madres con el emblema HSK
+  - src: /images/gallery/dia-de-las-madres-2025.webp
+    alt_en: Floral Día de las Madres 2025 poster with the HSK emblem.
+    alt_es: Afiche floral del Día de las Madres 2025 con el emblema HSK.
     credit: Hispanic Society of Kamloops / Zeffy
+  - src: /images/gallery/dia-de-las-madres-grafico.webp
+    alt_en: Día de las Madres graphic with the HSK emblem, used on the former Society website registration form.
+    alt_es: Gráfico del Día de las Madres con el emblema HSK, usado en el formulario del sitio anterior de la sociedad.
+    credit: Hispanic Society of Kamloops (former website)
+
 featured: false
 source: zeffy
 dateNote_en: "The poster itself has no printed date. The Zeffy image was uploaded 1 April 2025. 11 May 2025 was Mother's Day; the exact event date should be confirmed if used in official records."

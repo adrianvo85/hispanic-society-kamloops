@@ -1,6 +1,6 @@
 ---
 import { t, pick, splitBody } from "../lib/i18n";
-import type { Lang } from "../lib/paths";
+import { withBase, type Lang } from "../lib/paths";
 import { getCollection } from "astro:content";
 import { formatDate } from "../lib/dates";
 import settings from "../content/site/settings.json";
@@ -8,26 +8,90 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const copy = t(lang);
 const partners = (await getCollection("partners")).sort((a,b) => a.data.order - b.data.order);
+const purposes = [copy.about.purpose1, copy.about.purpose2, copy.about.purpose3, copy.about.purpose4, copy.about.purpose5];
+const objectives = [
+  { title: copy.about.obj1Title, body: copy.about.obj1Body },
+  { title: copy.about.obj2Title, body: copy.about.obj2Body },
+  { title: copy.about.obj3Title, body: copy.about.obj3Body },
+  { title: copy.about.obj4Title, body: copy.about.obj4Body },
+  { title: copy.about.obj5Title, body: copy.about.obj5Body },
+  { title: copy.about.obj6Title, body: copy.about.obj6Body },
+];
+const values = [
+  { title: copy.about.val1Title, body: copy.about.val1Body },
+  { title: copy.about.val2Title, body: copy.about.val2Body },
+  { title: copy.about.val3Title, body: copy.about.val3Body },
+  { title: copy.about.val4Title, body: copy.about.val4Body },
+  { title: copy.about.val5Title, body: copy.about.val5Body },
+  { title: copy.about.val6Title, body: copy.about.val6Body },
+];
 ---
-<section class="page-hero">
+<section class="page-hero skin-navy">
   <div class="wrap">
     <p class="eyebrow">{copy.about.eyebrow}</p>
     <h1>{copy.about.title}</h1>
+    <p class="lede">{copy.about.history}</p>
   </div>
 </section>
-<section class="section" style="padding-top:0">
-  <div class="wrap">
-    <p class="lede" style="font-size:1.2rem">{lang === "es" ? settings.chlavmDescriptionEs : settings.chlavmDescriptionEn}</p>
-    <p class="note">{copy.about.directoryNote} <a href={settings.chlavmUrl} rel="noopener">CHLAVM</a>.</p>
-    <p class="lede" style="margin-top:1.4rem">{copy.about.history}</p>
 
-    <dl style="display:grid;grid-template-columns:16rem 1fr;gap:0.7rem 1rem;margin-top:2.2rem;max-width:46rem">
+<section class="section skin-cream">
+  <div class="wrap">
+    <p class="eyebrow">{copy.about.missionEyebrow}</p>
+    <div class="mission-block">
+      <article class="mission-card">
+        <h2>{copy.about.missionTitle}</h2>
+        <p>{copy.about.missionBody}</p>
+      </article>
+      <article class="mission-card vision">
+        <h2>{copy.about.visionTitle}</h2>
+        <p>{copy.about.visionBody}</p>
+      </article>
+    </div>
+    <p class="pending-note">{copy.about.proposedNote}</p>
+
+    <h2 style="margin-top:4rem">{copy.about.objectivesTitle}</h2>
+    <div class="objective-grid">
+      {objectives.map((o) => (
+        <article class="objective-card">
+          <h3>{o.title}</h3>
+          <p>{o.body}</p>
+        </article>
+      ))}
+    </div>
+
+    <h2 style="margin-top:4rem">{copy.about.valuesTitle}</h2>
+    <div class="value-grid">
+      {values.map((v) => (
+        <article class="value-card">
+          <h3>{v.title}</h3>
+          <p>{v.body}</p>
+        </article>
+      ))}
+    </div>
+    <p class="pending-note">{copy.about.proposedNote}</p>
+
+    <h2 style="margin-top:4rem">{copy.about.purposesTitle}</h2>
+    <p class="note">{copy.about.purposesNote}</p>
+    <ol class="rules" style="max-width:52rem">
+      {purposes.map((p) => <li style="margin:0.8rem 0">{p}</li>)}
+    </ol>
+
+    <h2 style="margin-top:4rem">{copy.about.timelineTitle}</h2>
+    <p class="lede" style="max-width:52rem">{copy.about.timelineBody}</p>
+
+    <figure style="margin:3rem 0 0;max-width:52rem">
+      <img src={withBase("/images/gallery/banner-hsk.webp")} alt={copy.about.identityCaption} style="width:100%;height:auto" />
+      <figcaption class="stock-caption">{copy.about.identityCaption}</figcaption>
+    </figure>
+
+    <dl style="display:grid;grid-template-columns:16rem 1fr;gap:0.7rem 1rem;margin-top:3.2rem;max-width:46rem">
       <dt><strong>{copy.about.legal}</strong></dt><dd>{settings.legalName}</dd>
       <dt><strong>{copy.about.alsoKnown}</strong></dt><dd>{settings.publicNameEs}</dd>
       <dt><strong>{copy.about.societyNo}</strong></dt><dd><a href={settings.orgbookUrl}>{settings.societyNumber}</a></dd>
       <dt><strong>{copy.about.registered}</strong></dt><dd>{formatDate(settings.registered, lang, { weekday: undefined })}</dd>
       <dt><strong>{copy.about.renamed}</strong></dt><dd>{formatDate(settings.renamed, lang, { weekday: undefined })}</dd>
     </dl>
+    <p class="note" style="margin-top:1.6rem">{copy.about.directoryNote} <a href={settings.chlavmUrl} rel="noopener">CHLAVM</a>.</p>
 
     <h2 style="margin-top:4rem">{copy.about.partners}</h2>
     <div class="partners" style="margin-top:1.2rem">

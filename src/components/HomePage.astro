@@ -19,10 +19,16 @@ const pastPreview = featuredPast.length ? featuredPast : past.slice(0, 3);
 const sponsors = await getCollection("sponsors");
 const partners = (await getCollection("partners")).sort((a, b) => a.data.order - b.data.order);
 const documented = events.length;
+const cultureCards = [
+  { title: copy.culture.card1Title, body: copy.culture.card1Body },
+  { title: copy.culture.card2Title, body: copy.culture.card2Body },
+  { title: copy.culture.card3Title, body: copy.culture.card3Body },
+  { title: copy.culture.card4Title, body: copy.culture.card4Body },
+];
 ---
 <Hero lang={lang} />
 
-<section class="manifesto" id="vision">
+<section class="manifesto skin-navy" id="vision">
   <div class="wrap">
     <p class="eyebrow reveal">{copy.manifesto.eyebrow}</p>
     <h2 class="reveal">{copy.manifesto.line1}<br />{copy.manifesto.line2}<br />{copy.manifesto.line3}</h2>
@@ -35,7 +41,7 @@ const documented = events.length;
 
 <PapelPicado />
 
-<section class="section talavera" id="letter" style="padding-top:6rem;padding-bottom:6rem">
+<section class="section skin-cream" id="letter" style="padding-top:6rem;padding-bottom:6rem">
   <div class="wrap letter-teaser">
     <div class="reveal">
       <p class="eyebrow">{copy.letter.eyebrow}</p>
@@ -53,7 +59,7 @@ const documented = events.length;
   </div>
 </section>
 
-<section class="impact" id="impact">
+<section class="impact skin-navy" id="impact">
   <div class="wrap-wide">
     <div class="section-head reveal">
       <p class="eyebrow">{copy.impact.eyebrow}</p>
@@ -85,7 +91,7 @@ const documented = events.length;
   </div>
 </section>
 
-<section class="section" id="events">
+<section class="section skin-aztec" id="events">
   <div class="wrap-wide">
     <div class="section-head reveal">
       <p class="eyebrow">{copy.upcoming.eyebrow}</p>
@@ -111,16 +117,48 @@ const documented = events.length;
           {pastPreview.map((event) => <EventCard lang={lang} event={event} />)}
         </div>
         <p style="margin-top:2rem">
-          <a class="btn btn-ghost" href={pagePath(lang, "events")}>{copy.upcoming.allEvents}</a>
+          <a class="btn btn-dark" href={pagePath(lang, "events")}>{copy.upcoming.allEvents}</a>
         </p>
       </div>
     )}
   </div>
 </section>
 
-<PapelPicado />
+<section class="section skin-teal" id="culture">
+  <div class="wrap">
+    <p class="eyebrow reveal">{copy.culture.eyebrow}</p>
+    <h2 class="reveal">{copy.culture.title}</h2>
+    <p class="lede reveal">{copy.culture.lede}</p>
+    <div class="culture-grid">
+      {cultureCards.map((c) => (
+        <article class="culture-card reveal">
+          <span class="coming-soon">{copy.culture.comingSoon}</span>
+          <h3>{c.title}</h3>
+          <p>{c.body}</p>
+        </article>
+      ))}
+    </div>
+    <p class="note reveal" style="margin-top:1.6rem;color:rgba(255,248,239,0.92)">{copy.culture.note}</p>
+    <p style="margin-top:2rem">
+      <a class="btn btn-solid" href={pagePath(lang, "learn")}>{copy.culture.cta}</a>
+    </p>
+  </div>
+</section>
 
-<section class="section-dark section" id="donate">
+<section class="section skin-cream" id="dance">
+  <div class="wrap">
+    <p class="eyebrow reveal">{copy.dance.eyebrow}</p>
+    <h2 class="reveal">{copy.dance.title}</h2>
+    <p class="lede reveal">{copy.dance.intro}</p>
+    <p class="note">{copy.dance.formerly}</p>
+    <p style="margin-top:2rem;display:flex;flex-wrap:wrap;gap:0.8rem">
+      <a class="btn btn-dark" href={pagePath(lang, "dance")}>{copy.dance.joinCta}</a>
+      <a class="btn btn-jade" href={pagePath(lang, "dance") + "#hire"}>{copy.dance.hireCta}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section skin-talavera" id="donate">
   <div class="wrap">
     <p class="eyebrow reveal">{copy.donate.eyebrow}</p>
     <h2 class="reveal">{copy.donate.title}</h2>
@@ -137,33 +175,37 @@ const documented = events.length;
       })}
     </div>
     {settings.zeffyDonateUrl ? (
-      <a class="btn btn-primary" href={settings.zeffyDonateUrl} rel="noopener">
-        <span class="dot" aria-hidden="true"></span>
-        {copy.donate.cta}
-      </a>
+      <a class="btn btn-dark" href={settings.zeffyDonateUrl} rel="noopener">{copy.donate.cta}</a>
     ) : (
       <p class="note reveal">{copy.donate.pending}</p>
     )}
-    <p class="lede" style="margin-top:1.6rem">{copy.donate.invoiceNote}</p>
+    <p class="note" style="margin-top:1.6rem">{copy.donate.invoiceNote}</p>
+    <div class="panel" style="margin-top:2.8rem">
+      <p class="eyebrow">{copy.donate.almaEyebrow}</p>
+      <h3 style="margin:0.4rem 0 0.8rem;font-size:2.2rem">{copy.donate.almaTitle}</h3>
+      <p>{copy.donate.almaBody}</p>
+      <p style="margin-top:1.4rem">
+        <a class="btn btn-dark" href={pagePath(lang, "dance") + "#support"}>{copy.donate.almaCta}</a>
+      </p>
+    </div>
     <p style="margin-top:1.8rem">
       <a class="btn btn-solid" href={pagePath(lang, "donate")}>{copy.donate.cta}</a>
     </p>
   </div>
 </section>
 
-<section class="band-photo" style={`background-image:url('${withBase("/images/stock/papel-picado.jpg")}')`}>
-  <div class="shade"></div>
-  <div class="copy wrap reveal">
-    <p class="eyebrow" style="color:#fff">{copy.volunteer.eyebrow}</p>
+<section class="section skin-maya" id="volunteer">
+  <div class="wrap reveal">
+    <p class="eyebrow">{copy.volunteer.eyebrow}</p>
     <h2 style="font-size:clamp(3rem,5vw,5.4rem);font-weight:400;letter-spacing:-0.03em;max-width:16ch;margin:0.6rem 0 1.2rem">{copy.volunteer.title}</h2>
-    <p class="lede" style="color:rgba(255,255,255,0.8)">{copy.volunteer.body}</p>
+    <p class="lede">{copy.volunteer.body}</p>
     <p style="margin-top:2rem">
       <a class="btn btn-solid" href={pagePath(lang, "volunteer")}>{copy.volunteer.sticky}</a>
     </p>
   </div>
 </section>
 
-<section class="section" id="sponsors">
+<section class="section skin-cream" id="sponsors">
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">{copy.sponsors.eyebrow}</p>
@@ -171,8 +213,9 @@ const documented = events.length;
     </div>
     <div class="wall">
       {sponsors.map((s) => (
-        <a class="wall-item" href={s.data.url || pagePath(lang, "sponsors")}>
-          {s.data.logo ? <img src={s.data.logo} alt={s.data.name} /> : <strong>{s.data.name}</strong>}
+        <a class="wall-item" href={s.data.url || pagePath(lang, "sponsors")} rel={s.data.url ? "noopener" : undefined}>
+          {s.data.logo ? <img class="sponsor-logo" src={withBase(s.data.logo)} alt={s.data.name} /> : <strong>{s.data.name}</strong>}
+          <strong>{s.data.name}</strong>
           <p class="muted-sm">{pick(lang, s.data.tierLabel_en, s.data.tierLabel_es)}</p>
         </a>
       ))}
@@ -183,24 +226,15 @@ const documented = events.length;
   </div>
 </section>
 
-<section class="section section-alt" id="about">
+<section class="section skin-cream" id="about" style="background:var(--paper-2)">
   <div class="wrap">
     <p class="eyebrow reveal">{copy.about.eyebrow}</p>
-    <h2 class="reveal">{copy.about.title}</h2>
-    <p class="lede reveal">{lang === "es" ? settings.chlavmDescriptionEs : settings.chlavmDescriptionEn}</p>
-    <p class="note">{copy.about.directoryNote}</p>
-    <p class="lede" style="margin-top:1.4rem">{copy.about.history}</p>
-    <h3 style="font-size:2.2rem;font-weight:500;margin:3.2rem 0 1.2rem">{copy.about.partners}</h3>
-    <div class="partners">
-      {partners.map((p) => (
-        <a class="partner" href={p.data.url} rel="noopener">
-          <h3>{pick(lang, p.data.name_en, p.data.name_es)}</h3>
-        </a>
-      ))}
-    </div>
+    <h2 class="reveal">{copy.about.missionTitle}</h2>
+    <p class="lede reveal">{copy.about.missionBody}</p>
+    <p class="pending-note">{copy.about.proposedNote}</p>
     <p style="margin-top:2.4rem;display:flex;flex-wrap:wrap;gap:0.8rem">
-      <a class="btn btn-ghost" href={pagePath(lang, "about")}>{copy.nav.about}</a>
-      <a class="btn btn-dark" href={pagePath(lang, "board")}>{copy.trust.boardCta}</a>
+      <a class="btn btn-dark" href={pagePath(lang, "about")}>{copy.nav.about}</a>
+      <a class="btn btn-ghost" href={pagePath(lang, "board")}>{copy.trust.boardCta}</a>
       <a class="btn btn-ghost" href={pagePath(lang, "contact")}>{copy.nav.contact}</a>
     </p>
   </div>

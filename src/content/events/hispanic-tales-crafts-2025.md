@@ -18,11 +18,11 @@ priceFrom: 0
 currency: CAD
 age_en: All ages
 age_es: Todas las edades
-hero: /images/events/dia-de-los-muertos-2026.webp
+hero: ""
 gallery: []
 featured: false
 source: literacy-in-kamloops
-heroIsPlaceholder: true
+heroIsPlaceholder: false
 ---
 
 A free drop-in event with Literacy in Kamloops at the Kamloops Museum, part of Beem Credit Union Unplug and Play Family Literacy Week. The listing invited families to join the Hispanic Society of Kamloops for tales and crafts. No Society poster was available for this listing, so the event page has no gallery yet.

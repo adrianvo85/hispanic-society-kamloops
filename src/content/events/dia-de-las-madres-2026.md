@@ -18,12 +18,13 @@ priceFrom: 25
 currency: CAD
 age_en: All ages
 age_es: Todas las edades
-hero: /images/events/dia-de-las-madres-2026.webp
+hero: /images/gallery/dia-de-las-madres-2026.webp
 gallery:
-  - src: /images/events/dia-de-las-madres-2026.webp
-    alt_en: Día de las Madres 2026 poster with the HSK emblem
-    alt_es: Afiche del Día de las Madres 2026 con el emblema HSK
+  - src: /images/gallery/dia-de-las-madres-2026.webp
+    alt_en: Día de las Madres 2026 poster — Saturday 9 May, 10:00 a.m., with the HSK emblem.
+    alt_es: Afiche del Día de las Madres 2026 — sábado 9 de mayo, 10:00 a.m., con el emblema HSK.
     credit: Hispanic Society of Kamloops / Zeffy
+
 featured: true
 source: zeffy
 ---
