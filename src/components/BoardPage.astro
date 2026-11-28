@@ -3,11 +3,17 @@ import { t, pick } from "../lib/i18n";
 import { withBase, type Lang } from "../lib/paths";
 import { formatDate } from "../lib/dates";
 import { getCollection } from "astro:content";
+import letter from "../content/site/letter.json";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const copy = t(lang);
 const board = (await getCollection("board")).sort((a,b) => a.data.order - b.data.order);
 const resolutions = (await getCollection("resolutions")).sort((a,b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const signatory = pick(lang, letter.signatory_en, letter.signatory_es);
+const date = pick(lang, letter.date_en || "", letter.date_es || "");
+const greeting = pick(lang, letter.greeting_en, letter.greeting_es);
+const body = pick(lang, letter.body_en, letter.body_es);
+const closing = pick(lang, letter.closing_en, letter.closing_es);
 ---
 <section class="page-hero skin-navy">
   <div class="wrap">
@@ -18,22 +24,52 @@ const resolutions = (await getCollection("resolutions")).sort((a,b) => new Date(
 </section>
 <section class="section skin-cream" style="padding-top:3rem">
   <div class="wrap">
-    <div class="board-grid">
-      {board.map((m) => (
-        <article class:list={["board-card", m.data.photo && m.data.permissionToPublish && "has-photo"]}>
-          <div class="board-photo">
-            {m.data.photo && m.data.permissionToPublish && <img src={withBase(m.data.photo)} alt="" />}
-          </div>
-          <div class="meta">
-            {(!m.data.permissionToPublish || m.data.placeholder) && <span class="badge-example">{copy.common.placeholder}</span>}
-            <h3>{m.data.permissionToPublish ? pick(lang, m.data.name_en, m.data.name_es) : copy.board.pending}</h3>
-            <p class="muted-sm">{pick(lang, m.data.role_en, m.data.role_es)}</p>
-          </div>
-        </article>
-      ))}
+    <p class="note">{copy.board.rolesNote}</p>
+    <div class="board-grid" style="margin-top:1.6rem">
+      {board.map((m) => {
+        const published = m.data.permissionToPublish && !m.data.placeholder;
+        const duties = pick(lang, m.data.duties_en || "", m.data.duties_es || "");
+        return (
+          <article class:list={["board-card", m.data.photo && published && "has-photo"]}>
+            {m.data.photo && published && (
+              <div class="board-photo">
+                <img src={withBase(m.data.photo)} alt="" />
+              </div>
+            )}
+            <div class="meta">
+              <p class="role-label">{pick(lang, m.data.role_en, m.data.role_es)}</p>
+              <h3>{published ? pick(lang, m.data.name_en, m.data.name_es) : copy.board.pending}</h3>
+              {duties && <p class="board-duties">{duties}</p>}
+            </div>
+          </article>
+        );
+      })}
     </div>
+  </div>
+</section>
 
-    <h2 style="margin-top:4rem">{copy.board.minutesTitle}</h2>
+<section class="section skin-cream" id="letter" style="padding-top:2rem">
+  <div class="wrap">
+    <p class="eyebrow">{copy.letter.eyebrow}</p>
+    <h2>{copy.letter.title}</h2>
+    <p class="lede">{copy.letter.intro}</p>
+    <article class="letter-sheet" style="margin-top:2rem">
+      {date && <p class="letter-meta">{date}</p>}
+      <div class="letter-body">
+        <p>{greeting}</p>
+        {body.split("\n\n").map((para) => <p>{para}</p>)}
+      </div>
+      <div class="letter-sign">
+        <p>{closing}</p>
+        <p class="letter-name">{signatory}</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section skin-cream" style="padding-top:2rem">
+  <div class="wrap">
+    <h2>{copy.board.minutesTitle}</h2>
     <p class="lede">{copy.board.minutesBody}</p>
     <ul class="minutes">
       {resolutions.map((r) => (

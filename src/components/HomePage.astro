@@ -2,7 +2,6 @@
 import EventCard from "./EventCard.astro";
 import Hero from "./Hero.astro";
 import PapelPicado from "./PapelPicado.astro";
-import letter from "../content/site/letter.json";
 import { t, pick } from "../lib/i18n";
 import { pagePath, withBase, type Lang } from "../lib/paths";
 import { allEvents, splitEvents } from "../lib/events";
@@ -40,24 +39,6 @@ const cultureCards = [
 </section>
 
 <PapelPicado />
-
-<section class="section skin-cream" id="letter" style="padding-top:6rem;padding-bottom:6rem">
-  <div class="wrap letter-teaser">
-    <div class="reveal">
-      <p class="eyebrow">{copy.letter.eyebrow}</p>
-      <h2>{copy.letter.title}</h2>
-      <p class="lede">{copy.letter.teaser}</p>
-      {letter.draft && <p><span class="badge-example">{copy.letter.draftBadge}</span></p>}
-      <p style="margin-top:2rem">
-        <a class="btn btn-dark" href={pagePath(lang, "letter")}>{copy.letter.read}</a>
-      </p>
-    </div>
-    <div class="reveal">
-      <p class="letter-name" style="margin:0;font-size:1.8rem;font-weight:600">{pick(lang, letter.presidentName_en, letter.presidentName_es)}</p>
-      <p class="muted-sm">{pick(lang, letter.role_en, letter.role_es)}</p>
-    </div>
-  </div>
-</section>
 
 <section class="impact skin-navy" id="impact">
   <div class="wrap-wide">
