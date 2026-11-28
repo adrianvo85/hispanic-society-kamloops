@@ -1,8 +1,20 @@
 import type { Lang } from "./paths";
 
 export function asDate(value: Date | string): Date {
-  if (value instanceof Date) return value;
-  // Treat YYYY-MM-DD as a calendar date in Vancouver, not UTC midnight
+  // YAML dates like 2026-11-28 are parsed by Astro/Zod as UTC midnight.
+  // In America/Vancouver that is still the previous calendar day, so a
+  // date-only UTC midnight is treated as that calendar date at noon local.
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    if (
+      value.getUTCHours() === 0 &&
+      value.getUTCMinutes() === 0 &&
+      value.getUTCSeconds() === 0 &&
+      value.getUTCMilliseconds() === 0
+    ) {
+      return new Date(value.getUTCFullYear(), value.getUTCMonth(), value.getUTCDate(), 12, 0, 0);
+    }
+    return value;
+  }
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(value));
   if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]), 12, 0, 0);
   return new Date(value);
