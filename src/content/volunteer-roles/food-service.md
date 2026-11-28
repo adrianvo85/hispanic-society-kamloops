@@ -1,11 +1,11 @@
 ---
 slug: food-service
 placeholder: true
-title_en: Food and kitchen support
-title_es: Apoyo en comida y cocina
+title_en: Food and kitchen
+title_es: Cocina y comida
 order: 2
 ---
-Support community meals and food service at ticketed events.
+Support community meals and food service.
 
 <!-- ES -->
-Apoya las comidas comunitarias y el servicio de alimentos en eventos con boleto.
+Apoya las comidas comunitarias y el servicio.

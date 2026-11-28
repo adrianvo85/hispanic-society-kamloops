@@ -25,6 +25,17 @@ const values = [
   { title: copy.about.val5Title, body: copy.about.val5Body },
   { title: copy.about.val6Title, body: copy.about.val6Body },
 ];
+
+const posters = [
+  { src: "/images/gallery/agm-2026.webp", en: "Official poster for the Annual General Meeting (AGM) 2026. The listing date is Saturday, 28 November 2026, 7:30 p.m., at Kamloops Immigrant Services.", es: "Afiche oficial de la Asamblea General Anual (AGM) 2026. La fecha de la ficha es el sábado 28 de noviembre de 2026, a las 7:30 p.m., en Kamloops Immigrant Services.", credit: "Hispanic Society of Kamloops" },
+  { src: "/images/gallery/fiesta-latina-2026.webp", en: "Fiesta Latina 2026 poster, 24 October, O.L.P.H. Parish Centre.", es: "Afiche de Fiesta Latina 2026, 24 de octubre, O.L.P.H. Parish Centre.", credit: "Hispanic Society of Kamloops / Zeffy" },
+  { src: "/images/gallery/fiesta-latina-2025.webp", en: "Annual Fiesta Latina 2025 poster, 25 October, DoubleTree.", es: "Afiche de la Fiesta Latina anual 2025, 25 de octubre, DoubleTree.", credit: "Hispanic Society of Kamloops / Zeffy" },
+  { src: "/images/gallery/dia-de-los-muertos-2026.webp", en: "Día de los Muertos 2026 poster, Kamloops Museum and Archives.", es: "Afiche del Día de los Muertos 2026, Kamloops Museum and Archives.", credit: "Kamloops Museum and Archives" },
+  { src: "/images/gallery/dia-de-las-madres-2026.webp", en: "Día de las Madres 2026 poster, 9 May.", es: "Afiche del Día de las Madres 2026, 9 de mayo.", credit: "Hispanic Society of Kamloops / Zeffy" },
+  { src: "/images/gallery/dia-de-las-madres-2025.webp", en: "Día de las Madres 2025 poster.", es: "Afiche del Día de las Madres 2025.", credit: "Hispanic Society of Kamloops / Zeffy" },
+  { src: "/images/gallery/dia-del-padre-2026.webp", en: "Father's Day 2026 poster.", es: "Afiche del Día del Padre 2026.", credit: "Hispanic Society of Kamloops / Zeffy" },
+  { src: "/images/gallery/rosca-de-reyes-2024.webp", en: "Rosca de Reyes, 6 January 2024 — sold out poster.", es: "Rosca de Reyes, 6 de enero de 2024 — afiche de cupo agotado.", credit: "Hispanic Society of Kamloops (former website)" },
+];
 ---
 <section class="page-hero skin-navy">
   <div class="wrap">
@@ -84,10 +95,21 @@ const values = [
       <figcaption class="stock-caption">{copy.about.identityCaption}</figcaption>
     </figure>
 
+    <h2 style="margin-top:4rem">{copy.about.postersTitle}</h2>
+    <p class="lede" style="max-width:52rem">{copy.about.postersBody}</p>
+    <div class="poster-gallery" style="margin-top:1.6rem">
+      {posters.map((g) => (
+        <figure>
+          <img src={withBase(g.src)} alt={lang === "es" ? g.es : g.en} />
+          <figcaption class="stock-caption">{lang === "es" ? g.es : g.en} — {g.credit}</figcaption>
+        </figure>
+      ))}
+    </div>
+
+
     <dl style="display:grid;grid-template-columns:16rem 1fr;gap:0.7rem 1rem;margin-top:3.2rem;max-width:46rem">
       <dt><strong>{copy.about.legal}</strong></dt><dd>{settings.legalName}</dd>
       <dt><strong>{copy.about.alsoKnown}</strong></dt><dd>{settings.publicNameEs}</dd>
-      <dt><strong>{copy.about.societyNo}</strong></dt><dd><a href={settings.orgbookUrl}>{settings.societyNumber}</a></dd>
       <dt><strong>{copy.about.registered}</strong></dt><dd>{formatDate(settings.registered, lang, { weekday: undefined })}</dd>
       <dt><strong>{copy.about.renamed}</strong></dt><dd>{formatDate(settings.renamed, lang, { weekday: undefined })}</dd>
     </dl>

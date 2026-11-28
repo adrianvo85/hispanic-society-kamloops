@@ -1,11 +1,11 @@
 ---
 slug: photography
 placeholder: true
-title_en: Photography and documentation
+title_en: Photography
 title_es: Fotografía y registro
 order: 4
 ---
-Photograph public moments of events (never publish photos of children without permission).
+Capture the best moments (with image permissions).
 
 <!-- ES -->
-Fotografía momentos públicos de los eventos (nunca publiques fotos de menores sin permiso).
+Captura los mejores momentos (con permisos de imagen).

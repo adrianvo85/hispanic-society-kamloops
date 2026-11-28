@@ -1,5 +1,6 @@
 ---
 import ContactForm from "./ContactForm.astro";
+import PapelPicado from "./PapelPicado.astro";
 import { t, pick } from "../lib/i18n";
 import { pagePath, type Lang } from "../lib/paths";
 import { getCollection } from "astro:content";
@@ -28,21 +29,26 @@ const whys = [
   { t: copy.dance.why5Title, b: copy.dance.why5Body },
 ];
 ---
-<section class="page-hero skin-navy">
+<div class="page-dance">
+<section class="page-hero dance-hero">
+  <div class="dance-streamers" aria-hidden="true">
+    {Array.from({ length: 10 }, (_, i) => <span></span>)}
+  </div>
   <div class="wrap">
     <p class="eyebrow">{copy.dance.eyebrow}</p>
     <h1>{copy.dance.title}</h1>
     <p class="lede">{copy.dance.intro}</p>
-    <p class="note" style="color:var(--muted)">{copy.dance.formerly}</p>
-    <p style="margin-top:2rem;display:flex;flex-wrap:wrap;gap:0.8rem">
-      <a class="btn btn-solid" href="#join">{copy.dance.joinCta}</a>
-      <a class="btn btn-primary" href="#hire">{copy.dance.hireCta}</a>
-      <a class="btn btn-primary" href="#support">{copy.dance.supportCta}</a>
-    </p>
+    <p class="note">{copy.dance.formerly}</p>
+    <div class="dance-hero-actions">
+      <a class="btn-hire-dance" href="#hire">{copy.dance.hireHeroCta}</a>
+      <a class="btn-dance-secondary" href="#join">{copy.dance.joinCta}</a>
+    </div>
   </div>
 </section>
+<div class="jalisco-hem" aria-hidden="true"></div>
+<PapelPicado colors={["#E5097F", "#E85D04", "#F5C518", "#2E9A5C", "#17A8B4", "#5B2C8C"]} />
 
-<section class="section skin-cream">
+<section class="section skin-dance-cream">
   <div class="wrap">
     <h2>{copy.dance.whoTitle}</h2>
     <p class="lede">{copy.dance.whoBody}</p>
@@ -62,7 +68,8 @@ const whys = [
   </div>
 </section>
 
-<section class="section skin-cream" style="background:var(--paper-2)">
+<div class="jalisco-hem" aria-hidden="true"></div>
+<section class="section skin-dance-teal">
   <div class="wrap">
     <h2>{copy.dance.stylesTitle}</h2>
     <h3 style="margin-top:2rem">{copy.dance.mxTitle}</h3>
@@ -89,7 +96,7 @@ const whys = [
   </div>
 </section>
 
-<section class="section skin-cream" id="support">
+<section class="section skin-dance-rosa" id="support">
   <div class="wrap">
     <p class="eyebrow">{copy.donate.almaEyebrow}</p>
     <h2>{copy.dance.supportTitle}</h2>
@@ -112,7 +119,8 @@ const whys = [
   </div>
 </section>
 
-<section class="section skin-cream" id="join" style="background:var(--paper-2)">
+<div class="jalisco-hem" aria-hidden="true"></div>
+<section class="section skin-dance-gold" id="join">
   <div class="wrap">
     <h2>{copy.dance.recruitTitle}</h2>
     <p class="lede">{copy.dance.recruitBody}</p>
@@ -134,18 +142,23 @@ const whys = [
       <li>{copy.dance.faqWhen}</li>
       <li>{copy.dance.faqKids}</li>
     </ul>
-    <div style="margin-top:2.4rem">
+    <div class="hire-panel" style="margin-top:2.4rem;border-top-color:var(--pinata-pink)">
       <ContactForm lang={lang} kind="dance" />
     </div>
   </div>
 </section>
 
-<section class="section skin-cream" id="hire">
+<section class="section skin-dance-hire" id="hire">
   <div class="wrap">
     <h2>{copy.dance.hireTitle}</h2>
     <p class="lede">{copy.dance.hireBody}</p>
-    <div style="margin-top:2rem">
+    <p style="margin-top:1.6rem">
+      <a class="btn-hire-dance" href="#hire-form">{copy.dance.hireHeroCta}</a>
+    </p>
+    <div class="hire-panel" id="hire-form" style="margin-top:2rem">
       <ContactForm lang={lang} kind="book" />
     </div>
   </div>
 </section>
+<div class="jalisco-hem" aria-hidden="true"></div>
+</div>

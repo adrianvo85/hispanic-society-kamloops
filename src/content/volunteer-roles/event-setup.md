@@ -1,11 +1,11 @@
 ---
 slug: event-setup
 placeholder: true
-title_en: Event setup and welcome
-title_es: Montaje y bienvenida en eventos
+title_en: Setup and welcome
+title_es: Montaje y bienvenida
 order: 1
 ---
-Help set up rooms, greet guests, and pack down after events.
+Greet guests, help set up and pack down.
 
 <!-- ES -->
-Ayuda a preparar el salón, recibir a las personas y recoger al final.
+Recibe a las personas, ayuda a montar y desmontar.

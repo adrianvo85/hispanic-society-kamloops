@@ -47,12 +47,12 @@ const benefits = [
     <div class="section-head">
       <p class="eyebrow">{copy.volunteer.rolesEyebrow}</p>
       <h2>{copy.volunteer.rolesTitle}</h2>
+      <p class="lede">{copy.volunteer.rolesNote}</p>
     </div>
     <div class="grid-cards">
       {roles.map((r) => (
         <article class="card role-card">
           <div class="card-body">
-            {r.data.placeholder && <span class="badge-example">{copy.volunteer.exampleBadge}</span>}
             <div class="role-icon" aria-hidden="true"></div>
             <h3>{pick(lang, r.data.title_en, r.data.title_es)}</h3>
             <p style="white-space:pre-wrap">{splitBody(r.body || "", lang)}</p>
