@@ -1,7 +1,7 @@
 ---
 import ContactForm from "./ContactForm.astro";
 import { t, pick, splitBody } from "../lib/i18n";
-import { withBase, type Lang } from "../lib/paths";
+import { type Lang } from "../lib/paths";
 import { getCollection } from "astro:content";
 import settings from "../content/site/settings.json";
 interface Props { lang: Lang; }
@@ -14,9 +14,10 @@ const benefits = [
   { title: copy.volunteer.benefit2Title, body: copy.volunteer.benefit2Body },
   { title: copy.volunteer.benefit3Title, body: copy.volunteer.benefit3Body },
   { title: copy.volunteer.benefit4Title, body: copy.volunteer.benefit4Body },
+  { title: copy.volunteer.benefit5Title, body: copy.volunteer.benefit5Body },
 ];
 ---
-<section class="page-hero" style={`background-image:linear-gradient(180deg,rgba(7,9,13,0.45),rgba(7,9,13,0.88)),url('${withBase("/images/stock/papel-picado.jpg")}');background-size:cover;background-position:center`}>
+<section class="page-hero skin-maya">
   <div class="wrap">
     <p class="eyebrow">{copy.volunteer.eyebrow}</p>
     <h1>{copy.volunteer.title}</h1>
@@ -27,7 +28,7 @@ const benefits = [
   </div>
 </section>
 
-<section class="section talavera">
+<section class="section skin-maya">
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">{copy.volunteer.benefitsEyebrow}</p>
@@ -41,6 +42,7 @@ const benefits = [
         </article>
       ))}
     </div>
+    <p class="note">{copy.volunteer.pendingNote}</p>
 
     <div class="section-head">
       <p class="eyebrow">{copy.volunteer.rolesEyebrow}</p>
@@ -64,7 +66,7 @@ const benefits = [
   </div>
 </section>
 
-<section class="section section-alt" id="event-jobs">
+<section class="section skin-cream" id="event-jobs">
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">{copy.jobs.eyebrow}</p>
@@ -94,7 +96,7 @@ const benefits = [
   </div>
 </section>
 
-<section class="section" id="volunteer-signup">
+<section class="section skin-cream" id="volunteer-signup">
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">{copy.volunteer.formTitle}</p>

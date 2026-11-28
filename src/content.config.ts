@@ -80,6 +80,7 @@ const sponsors = defineCollection({
     tierLabel_es: z.string().optional().default(""),
     logo: z.string().optional().default(""),
     url: z.string().optional().default(""),
+    phone: z.string().optional().default(""),
     year: z.number().nullable().optional(),
     event: z.string().optional().default(""),
     source: z.string().optional().default(""),
@@ -125,6 +126,29 @@ const partners = defineCollection({
   }),
 });
 
+
+const danceStyle = z.object({
+  id: z.string(),
+  name_en: z.string(),
+  name_es: z.string(),
+  region: z.enum(["mx", "co"]),
+  confirmed: z.boolean().default(false),
+  desc_en: z.string(),
+  desc_es: z.string(),
+});
+
+const dance = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/dance" }),
+  schema: z.object({
+    slug: z.string(),
+    placeholder: z.boolean().default(true),
+    name_en: z.string(),
+    name_es: z.string(),
+    formerName: z.string().optional().default(""),
+    styles: z.array(danceStyle).default([]),
+  }),
+});
+
 export const collections = {
   events,
   board,
@@ -133,4 +157,5 @@ export const collections = {
   volunteerRoles,
   eventJobs,
   partners,
+  dance,
 };
