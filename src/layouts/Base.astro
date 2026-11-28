@@ -28,11 +28,10 @@ const jsonLd = {
   name: settings.legalName,
   alternateName: [settings.publicNameEs, settings.publicNameEn],
   foundingDate: settings.registered,
-  identifier: settings.societyNumber,
   email: settings.email,
   url: String(Astro.site) + withBase("/").replace(/\/$/, "") + "/",
   areaServed: "Kamloops, British Columbia, Canada",
-  sameAs: [settings.facebookUrl, settings.instagramUrl, settings.orgbookUrl],
+  sameAs: [settings.facebookUrl, settings.instagramUrl],
 };
 ---
 <!doctype html>
